@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Marcos Ibáñez Fandos – Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #f3f4f6;
+      --bg-card: #ffffff;
+      --border: #e5e7eb;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --accent: #2563eb;
+      --badge-bg: #111827;
+      --badge-text: #f9fafb;
+      --shadow-soft: 0 8px 20px rgba(15, 23, 42, 0.08);
+      --radius-card: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .page {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.5rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+
+    /* LEFT COLUMN (PROFILE) */
+
+    .card {
+      background: var(--bg-card);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-soft);
+      padding: 1.5rem;
+    }
+
+    .profile-card {
+      text-align: center;
+    }
+
+    .avatar {
+      width: 110px;
+      height: 110px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      margin: 0 auto 1rem;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .name {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .role {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 0.55rem 1.2rem;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #ffffff;
+      font-size: 0.9rem;
+      font-weight: 500;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.05);
+      text-decoration: none;
+    }
+
+    .section-title-sm {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin: 1.25rem 0 0.55rem;
+    }
+
+    .link-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+
+    .link-list li + li {
+      margin-top: 0.25rem;
+    }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .chip {
+      font-size: 0.8rem;
+      padding: 0.25rem 0.55rem;
+      border-radius: 999px;
+      background: var(--badge-bg);
+      color: var(--badge-text);
+      white-space: nowrap;
+    }
+
+    .sidebar-section + .sidebar-section {
+      margin-top: 1rem;
+    }
+
+    .sidebar-section .item-title {
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .sidebar-section .item-meta {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .sidebar-section .item {
+      margin-bottom: 0.5rem;
+    }
+
+    /* RIGHT COLUMN (CONTENT) */
+
+    .content-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .content-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .see-all {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+
+    .project-card {
+      position: relative;
+      padding-bottom: 1.3rem;
+    }
+
+    .project-title {
+      font-size: 0.98rem;
+      font-weight: 600;
+      margin: 0 0 0.15rem;
+    }
+
+    .project-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .project-desc {
+      font-size: 0.85rem;
+      color: var(--text-main);
+      margin-bottom: 0.6rem;
+    }
+
+    .project-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.8rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      background: #f3f4f6;
+    }
+
+    .pill-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #f97316;
+    }
+
+    .section-block {
+      margin-top: 1.5rem;
+    }
+
+    .two-column {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+
+    .publication-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 0.15rem;
+    }
+
+    .publication-meta {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      padding: 0.75rem 0 0.5rem;
+    }
+
+    @media (max-width: 800px) {
+      .layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="layout">
+      <!-- LEFT COLUMN -->
+      <aside>
+        <div class="card profile-card">
+          <div class="avatar">
+            <!-- Si tienes foto, sustituye por <img src="tu_foto.jpg" alt="Marcos" /> -->
+            MI
+          </div>
+          <div class="name">Marcos Ibáñez Fandos</div>
+          <div class="role">
+            Telecommunications Engineering · Data & Machine Learning · Fintech / Cybersecurity
+          </div>
+          <a
+            class="btn-primary"
+            href="Marcos_Ibanez_CV.pdf"
+            target="_blank"
+          >
+            Download Resume
+          </a>
+
+          <div class="sidebar-section">
+            <div class="section-title-sm">Contact</div>
+            <ul class="link-list">
+              <li><strong>GitHub:</strong> <a href="https://github.com/MarcosIbanezFandos" target="_blank">@MarcosIbanezFandos</a></li>
+              <li><strong>LinkedIn:</strong> <a href="TU_LINKEDIN" target="_blank">linkedin.com/in/TU-USUARIO</a></li>
+              <li><strong>Email:</strong> <a href="mailto:TU_EMAIL">TU_EMAIL</a></li>
+            </ul>
+          </div>
+
+          <div class="sidebar-section">
+            <div class="section-title-sm">Tech Stack</div>
+            <div class="chip-row">
+              <span class="chip">Python</span>
+              <span class="chip">pandas</span>
+              <span class="chip">NumPy</span>
+              <span class="chip">scikit-learn</span>
+              <span class="chip">LightGBM</span>
+              <span class="chip">XGBoost</span>
+              <span class="chip">SQL</span>
+              <span class="chip">Git / GitHub</span>
+              <span class="chip">Streamlit</span>
+            </div>
+          </div>
+
+          <div class="sidebar-section">
+            <div class="section-title-sm">Experience</div>
+
+            <div class="item">
+              <div class="item-title">Data & Analytics Intern – ETRA</div>
+              <div class="item-meta">Public transport operations · C# · Power BI · Python</div>
+            </div>
+
+            <div class="item">
+              <div class="item-title">Telecommunications Engineering</div>
+              <div class="item-meta">UPV · Erasmus at TUM</div>
+            </div>
+          </div>
+
+          <div class="sidebar-section">
+            <div class="section-title-sm">Interests</div>
+            <div class="chip-row">
+              <span class="chip">Fintech</span>
+              <span class="chip">Fraud Detection</span>
+              <span class="chip">Cybersecurity</span>
+              <span class="chip">Quant / Risk</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- RIGHT COLUMN -->
+      <main>
+        <!-- GitHub Projects -->
+        <section class="card">
+          <div class="content-header">
+            <div class="content-title">GitHub Projects</div>
+            <!-- <a class="see-all" href="https://github.com/MarcosIbanezFandos?tab=repositories" target="_blank">See all</a> -->
+          </div>
+
+          <div class="grid">
+            <!-- PROJECT 1 -->
+            <article class="card project-card">
+              <h3 class="project-title">Credit Card Fraud Detection</h3>
+              <p class="project-subtitle">
+                End-to-end ML project for detecting fraudulent transactions.
+              </p>
+              <p class="project-desc">
+                Imbalanced learning, model comparison (Logistic Regression, Random Forest,
+                XGBoost, LightGBM), cost-sensitive evaluation and interactive Streamlit app.
+              </p>
+              <div class="project-footer">
+                <span>Python · scikit-learn · Streamlit</span>
+                <a href="https://github.com/MarcosIbanezFandos/CreditCard-FraudDetection" target="_blank">View repo →</a>
+              </div>
+            </article>
+
+            <!-- PROJECT 2 (EJEMPLO) -->
+            <article class="card project-card">
+              <h3 class="project-title">Public Transport Operations Dashboard</h3>
+              <p class="project-subtitle">
+                Internal tool for monitoring bus operational data and costs.
+              </p>
+              <p class="project-desc">
+                Data processing with Alteryx / Python, visualization in Power BI and C# desktop
+                interface to support decision-making on operational efficiency and sustainability.
+              </p>
+              <div class="project-footer">
+                <span>C# · Power BI · Python</span>
+                <span class="pill"><span class="pill-dot"></span>Private / internal</span>
+              </div>
+            </article>
+
+            <!-- Puedes añadir más proyectos copiando/pegando este bloque -->
+          </div>
+        </section>
+
+        <!-- Publications / Academic Work -->
+        <section class="section-block card">
+          <div class="content-header">
+            <div class="content-title">Academic Work</div>
+          </div>
+
+          <div class="two-column">
+            <article>
+              <div class="publication-title">Final Degree Project – Credit Card Fraud Detection</div>
+              <div class="publication-meta">Telecommunications Engineering · UPV</div>
+              <p class="project-desc">
+                Design and evaluation of machine learning models for credit card fraud detection,
+                including cost-sensitive metrics and deployment of a Streamlit demo application.
+              </p>
+            </article>  
+
+            <!-- Añade aquí otros trabajos, papers, seminarios, etc. -->
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="footer">
+      © <span id="year"></span> Marcos Ibáñez Fandos
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
