@@ -89,17 +89,17 @@
     .page {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 1.5rem;
+      padding: 2rem 2rem 2.5rem;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
+      gap: 1.75rem;
     }
 
     .layout {
       display: grid;
-      grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
-      gap: 1.5rem;
+      grid-template-columns: minmax(280px, 330px) minmax(0, 1fr);
+      gap: 1.75rem;
       align-items: flex-start;
     }
 
@@ -337,9 +337,33 @@
       padding: 0.75rem 0 0.5rem;
     }
 
-    @media (max-width: 800px) {
+    @media (max-width: 1024px) {
       .layout {
         grid-template-columns: minmax(0, 1fr);
+      }
+      .page {
+        padding: 1.75rem 1.5rem 2rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .page {
+        padding: 1.5rem 1.25rem 1.75rem;
+      }
+      .grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .theme-switcher {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page {
+        padding: 1.25rem 1rem 1.5rem;
+      }
+      .card {
+        padding: 1.25rem;
       }
     }
   </style>
