@@ -18,6 +18,54 @@
       --radius-card: 16px;
     }
 
+    body.theme-light {
+      --bg: #f3f4f6;
+      --bg-card: #ffffff;
+      --border: #e5e7eb;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --accent: #2563eb;
+      --badge-bg: #111827;
+      --badge-text: #f9fafb;
+      --shadow-soft: 0 8px 20px rgba(15, 23, 42, 0.08);
+    }
+
+    body.theme-dark {
+      --bg: #020617;
+      --bg-card: #0b1120;
+      --border: #1f2937;
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --accent: #38bdf8;
+      --badge-bg: #111827;
+      --badge-text: #f9fafb;
+      --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.6);
+    }
+
+    body.theme-midnight {
+      --bg: #020617;
+      --bg-card: #020617;
+      --border: #1d2a4a;
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --accent: #4f46e5;
+      --badge-bg: #0f172a;
+      --badge-text: #e5e7eb;
+      --shadow-soft: 0 12px 30px rgba(15, 23, 42, 0.7);
+    }
+
+    body.theme-emerald {
+      --bg: #ecfdf5;
+      --bg-card: #ffffff;
+      --border: #bbf7d0;
+      --text-main: #064e3b;
+      --text-muted: #047857;
+      --accent: #10b981;
+      --badge-bg: #047857;
+      --badge-text: #ecfdf5;
+      --shadow-soft: 0 10px 24px rgba(16, 185, 129, 0.25);
+    }
+
     * {
       box-sizing: border-box;
     }
@@ -260,6 +308,28 @@
       margin-bottom: 0.5rem;
     }
 
+    .theme-switcher {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .theme-switcher label {
+      font-weight: 500;
+    }
+
+    .theme-select {
+      padding: 0.25rem 0.5rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      font-size: 0.85rem;
+      color: var(--text-main);
+    }
+
     .footer {
       text-align: center;
       font-size: 0.8rem;
@@ -274,8 +344,17 @@
     }
   </style>
 </head>
-<body>
+<body class="theme-light">
   <div class="page">
+    <div class="theme-switcher">
+      <label for="theme-select">Theme:</label>
+      <select id="theme-select" class="theme-select">
+        <option value="theme-light">Light</option>
+        <option value="theme-dark">Dark</option>
+        <option value="theme-midnight">Midnight</option>
+        <option value="theme-emerald">Emerald</option>
+      </select>
+    </div>
     <div class="layout">
       <!-- LEFT COLUMN -->
       <aside>
@@ -383,6 +462,16 @@
 
         <div class="card">
           <div class="sidebar-section">
+            <div class="section-title-sm">Volunteering</div>
+            <div class="item">
+              <div class="item-title">Community Development Volunteer – Accra, Ghana</div>
+              <div class="item-meta">Dream Africa Care Foundation · Youth coaching and educational support</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="sidebar-section">
             <div class="section-title-sm">Interests</div>
             <div class="chip-row">
               <span class="chip">Fintech</span>
@@ -411,7 +500,9 @@
                 End-to-end ML project for detecting fraudulent transactions.
               </p>
               <p class="project-desc">
-                This Bachelor's Thesis develops a bank fraud detection model using Artificial Intelligence, based on a cost-sensitive Random Forest focused on minimizing the real economic impact of prediction errors. Using the public Kaggle Credit Card Fraud Detection dataset, several models are trained and evaluated, explicitly addressing class imbalance and the effect of transaction amount on decision cost. The system applies probability calibration and threshold optimization to balance precision, recall and operational cost. In addition, an interactive application is implemented to simulate real-time fraud detection and illustrate how the model could be integrated into FinTech platforms. The results show that the cost-sensitive approach improves the detection of relevant fraud cases while reducing financial losses and limiting user friction.
+                This Bachelor's Thesis develops a bank fraud detection model using Artificial Intelligence, based on a cost-sensitive Random Forest focused on minimizing the real economic impact of prediction errors. Using the public Kaggle Credit Card Fraud Detection dataset, several models are trained and evaluated, explicitly addressing class imbalance and the effect of transaction amount on decision cost. The system applies probability calibration and threshold optimization to balance precision, recall and operational cost.
+                
+                In addition, an interactive application is implemented to simulate real-time fraud detection and illustrate how the model could be integrated into FinTech platforms. The results show that the cost-sensitive approach improves the detection of relevant fraud cases while reducing financial losses and limiting user friction.
               </p>
               <div class="project-footer">
                 <span>Python · scikit-learn · Streamlit</span>
@@ -424,8 +515,9 @@
                 Python tool for rebalancing investment portfolios to target allocations.
               </p>
               <p class="project-desc">
-                Loads current holdings and target weights, computes the required buy/sell orders and resulting portfolio composition,
-                helping to automate periodic rebalancing and basic risk control for retail investment portfolios.
+                Loads current holdings and target weights, computes the exact buy/sell orders required to rebalance, and shows the resulting post-trade portfolio composition in terms of units, values and weights. This allows you to correct portfolio drift, systematically realign the portfolio with a target strategic asset allocation and keep risk in line with the investor’s profile.
+                
+                The tool is designed to support recurring rebalance cycles and what-if scenarios (changing target weights, adding new assets, modifying contributions), making it a lightweight rebalancing engine that could be integrated into fintech tooling for portfolio management, robo-advisory workflows or internal risk-control dashboards.
               </p>
               <div class="project-footer">
                 <span>Python · pandas · Finance</span>
@@ -442,7 +534,7 @@
 
           <div class="two-column">
             <article>
-              <div class="publication-title">Hybrid Neural Networks – AI Processor Design Seminar</div>
+              <div class="publication-title">Hybrid Neural Networks (2025) </div>
               <div class="publication-meta">Technical University of Munich · Chair of AI Processor Design</div>
               <p class="project-desc">
                 Seminar paper on hybrid neural networks (HNNs), analysing how the combination of artificial and spiking neural
@@ -462,6 +554,26 @@
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
+    (function() {
+      const body = document.body;
+      const select = document.getElementById('theme-select');
+      const stored = window.localStorage ? localStorage.getItem('portfolio-theme') : null;
+      const defaultTheme = stored || 'theme-light';
+
+      body.classList.remove('theme-light', 'theme-dark', 'theme-midnight', 'theme-emerald');
+      body.classList.add(defaultTheme);
+      if (select) {
+        select.value = defaultTheme;
+        select.addEventListener('change', () => {
+          const value = select.value;
+          body.classList.remove('theme-light', 'theme-dark', 'theme-midnight', 'theme-emerald');
+          body.classList.add(value);
+          if (window.localStorage) {
+            localStorage.setItem('portfolio-theme', value);
+          }
+        });
+      }
+    })();
   </script>
 </body>
 </html>
