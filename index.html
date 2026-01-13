@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Portfolio | Marcos Ibáñez</title>
+    <title>Marcos Ibáñez | Telecommunications Engineer</title>
     
     <!-- Fonts: Inter for that clean, professional engineering look -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -144,14 +144,16 @@
                 ],
                 publications: [
                     {
-                        title: "Bachelor Thesis: Fraud Detection in Fintech Transactions using Artificial Intelligence (2025)",
+                        title: "Bachelor Thesis: Fraud Detection in Fintech Transactions using Artificial Intelligence",
                         publisher: "Universitat Politècnica de València",
+                        year: "2025",
                         description: "End-to-end ML research focused on detecting fraudulent transactions using cost-sensitive learning to minimize economic impact.",
                         link: "Memoria_Entrega_Final_MarcosIbanez.pdf"
                     },
                     {
-                        title: "Hybrid Neural Networks (2025)",
+                        title: "Hybrid Neural Networks",
                         publisher: "Technical University of Munich",
+                        year: "2025",
                         description: "Seminar paper analyzing the combination of artificial and spiking neural models for neuromorphic chips (Tianjic), focusing on energy efficiency in edge AI.",
                         link: "Hybrid_Neural _Networks_Marcos_Ibanez_2025.pdf"
                     }
@@ -195,6 +197,7 @@
                         role: "Community Development Volunteer",
                         organization: "Dream Africa Care Foundation",
                         location: "Accra, Ghana",
+                        dates: "July 2024",
                         description: "Provided youth coaching and educational support to foster community development."
                     }
                 ]
@@ -260,14 +263,16 @@
                 ],
                 publications: [
                     {
-                        title: "TFG: Detección de Fraude en Transacciones Fintech usando IA (2025)",
+                        title: "TFG: Detección de Fraude en Transacciones Fintech usando IA",
                         publisher: "Universitat Politècnica de València",
+                        year: "2025",
                         description: "Investigación de ML integral centrada en la detección de transacciones fraudulentas utilizando aprendizaje sensible al coste para minimizar el impacto económico.",
                         link: "Memoria_Entrega_Final_MarcosIbanez.pdf"
                     },
                     {
-                        title: "Redes Neuronales Híbridas (2025)",
+                        title: "Redes Neuronales Híbridas",
                         publisher: "Technical University of Munich",
+                        year: "2025",
                         description: "Artículo de seminario analizando la combinación de modelos neuronales artificiales y de picos para chips neuromórficos (Tianjic), centrándose en la eficiencia energética en Edge AI.",
                         link: "Hybrid_Neural _Networks_Marcos_Ibanez_2025.pdf"
                     }
@@ -311,6 +316,7 @@
                         role: "Voluntario de Desarrollo Comunitario",
                         organization: "Dream Africa Care Foundation",
                         location: "Accra, Ghana",
+                        dates: "Julio 2024",
                         description: "Coaching juvenil y apoyo educativo para fomentar el desarrollo comunitario."
                     }
                 ]
@@ -663,7 +669,7 @@
                                                     {pub.title} 
                                                     {pub.link && <Icon name="external-link" size={14} className="inline-block ml-1 mb-1" />}
                                                 </h4>
-                                                <div className="text-sm text-slate-500 mb-2">{pub.publisher}</div>
+                                                <div className="text-sm text-slate-500 mb-2">{pub.publisher} · {pub.year}</div>
                                                 <p className="text-sm text-slate-600 dark:text-slate-400 leading-normal">{pub.description}</p>
                                             </div>
                                          </GlowingCard>
@@ -714,7 +720,7 @@
                                                 <Icon name="heart" size={14} className="text-teal-500" />
                                                 <h5 className="font-medium text-slate-900 dark:text-slate-200 text-sm">{vol.role}</h5>
                                             </div>
-                                            <div className="text-sm text-slate-500 mb-1">{vol.organization} · {vol.location}</div>
+                                            <div className="text-sm text-slate-500 mb-1">{vol.organization} · {vol.location} · {vol.dates}</div>
                                             <p className="text-sm text-slate-600 dark:text-slate-400">{vol.description}</p>
                                         </div>
                                     ))}
