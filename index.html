@@ -81,112 +81,240 @@
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
 
-        // --- Data ---
-        const content = {
-            profile: {
-                name: "Marcos Ibáñez",
-                role: "Telecom Engineering · FinTech · Data & ML",
-                tagline: "Leveraging a solid engineering foundation to drive innovation in Finance, Business Strategy, and AI.",
-                about: [
-                    "My degree in Telecommunications Engineering provided me with a rigorous technical foundation and a deep understanding of complex systems. While engineering trained my analytical mind, my curiosity led me to explore parallel fields where technology meets business impact. I have actively dedicated myself to mastering Data Science, Financial Markets, and Investment Strategies, with a passion for applying Artificial Intelligence to optimize decision-making and generate value."
+        // --- Data Translations ---
+        const translations = {
+            en: {
+                nav: {
+                    about: 'About',
+                    experience: 'Experience',
+                    projects: 'Projects',
+                    publications: 'Publications & Research',
+                    education: 'Education',
+                    certifications: 'Certifications',
+                    volunteering: 'Volunteering'
+                },
+                profile: {
+                    name: "Marcos Ibáñez",
+                    role: "Telecom Engineering · FinTech · Data & ML",
+                    tagline: "Leveraging a solid engineering foundation to drive innovation in Finance, Business Strategy, and AI.",
+                    about: [
+                        "My degree in Telecommunications Engineering provided me with a rigorous technical foundation and a deep understanding of complex systems. While engineering trained my analytical mind, my curiosity led me to explore parallel fields where technology meets business impact. I have actively dedicated myself to mastering Data Science, Financial Markets, and Investment Strategies, with a passion for applying Artificial Intelligence to optimize decision-making and generate value."
+                    ],
+                    links: [
+                        { name: "GitHub", url: "https://github.com/MarcosIbanezFandos", icon: "github" },
+                        { name: "LinkedIn", url: "https://www.linkedin.com/in/marcos-ibanez/", icon: "linkedin" },
+                        { name: "Email", url: "mailto:marcosibanezfandos@gmail.com", icon: "mail" },
+                        { name: "Resume", url: "CV_MarcosIbanez_2026.pdf", icon: "file-text" }
+                    ],
+                    viewResume: "View Full Resume"
+                },
+                experience: [
+                    {
+                        dates: "2022",
+                        title: "Data & Analytics Intern",
+                        company: "ETRA I+D",
+                        link: "#",
+                        description: "Analyzed complex datasets using SQL and Python to drive strategic decisions. Built automated ETL pipelines and visualized key performance indicators using Power BI and Alteryx.",
+                        skills: ["SQL", "C#", "Power BI", "Alteryx"]
+                    },
+                    {
+                        dates: "2023",
+                        title: "ICT Network Technician",
+                        company: "Pamesa Ceramics",
+                        link: "#",
+                        description: "Managed industrial networking infrastructure. Oversaw fiber optics installations and data room maintenance for high-availability manufacturing systems.",
+                        skills: ["Industrial Networking", "Cybersecurity", "Cisco", "Fiber Optics"]
+                    }
                 ],
-                links: [
-                    { name: "GitHub", url: "https://github.com/MarcosIbanezFandos", icon: "github" },
-                    { name: "LinkedIn", url: "https://www.linkedin.com/in/marcos-ibanez/", icon: "linkedin" },
-                    { name: "Email", url: "mailto:marcosibanezfandos@gmail.com", icon: "mail" },
-                    { name: "Resume", url: "CV_MarcosIbanez_2026.pdf", icon: "file-text" }
+                projects: [
+                    {
+                        title: "Credit Card Fraud Detection",
+                        description: "Developed a cost-sensitive Random Forest model focused on minimizing financial impact. The system applies probability calibration and threshold optimization to balance precision, recall, and operational cost.",
+                        link: "https://github.com/MarcosIbanezFandos/Credit-Card-Fraud-Detection",
+                        image: null, 
+                        tech: ["Python", "scikit-learn", "Streamlit", "ML"]
+                    },
+                    {
+                        title: "Portfolio Rebalancer",
+                        description: "A Python tool for rebalancing investment portfolios. Loads holdings, computes exact buy/sell orders based on target weights, and simulates post-trade composition. Designed for robo-advisory workflows.",
+                        link: "https://github.com/MarcosIbanezFandos/Portfolio-Rebalancer",
+                        image: null,
+                        tech: ["Python", "Pandas", "Finance", "Quantitative Analysis"]
+                    }
+                ],
+                publications: [
+                    {
+                        title: "Bachelor Thesis: Fraud Detection in Fintech Transactions using Artificial Intelligence (2025)",
+                        publisher: "Universitat Politècnica de València",
+                        description: "End-to-end ML research focused on detecting fraudulent transactions using cost-sensitive learning to minimize economic impact.",
+                        link: "Memoria_Entrega_Final_MarcosIbanez.pdf"
+                    },
+                    {
+                        title: "Hybrid Neural Networks (2025)",
+                        publisher: "Technical University of Munich",
+                        description: "Seminar paper analyzing the combination of artificial and spiking neural models for neuromorphic chips (Tianjic), focusing on energy efficiency in edge AI.",
+                        link: "Hybrid_Neural _Networks_Marcos_Ibanez_2025.pdf"
+                    }
+                ],
+                education: [
+                    {
+                        school: "Universitat Politècnica de València",
+                        degree: "B.Sc. Telecommunications Engineering",
+                        details: "Focus on Telematic Systems"
+                    },
+                    {
+                        school: "Technical University of Munich",
+                        degree: "Erasmus+ Exchange",
+                        details: "School of Computation, Information and Technology"
+                    }
+                ],
+                certifications: [
+                    {
+                        title: "🇬🇧 Advanced English, Level C1",
+                        issuer: "Cambridge English",
+                        year: "2017"
+                    },
+                    {
+                        title: "🇫🇷 Diplôme d’études en langue française, DELF B2",
+                        issuer: "Institut français",
+                        year: "2019"
+                    },
+                    {
+                        title: "🇩🇪 Goethe-Zertifikat, Niveau B1",
+                        issuer: "Goethe-Institut e.V.",
+                        year: "2018"
+                    },
+                    {
+                        title: "Grau Mitjà, Nivell C1",
+                        issuer: "Junta Qualificadora de Coneixements de Valencià",
+                        year: "2024"
+                    }
+                ],
+                volunteering: [
+                    {
+                        role: "Community Development Volunteer",
+                        organization: "Dream Africa Care Foundation",
+                        location: "Accra, Ghana",
+                        description: "Provided youth coaching and educational support to foster community development."
+                    }
                 ]
             },
-            experience: [
-                {
-                    dates: "2022",
-                    title: "Data & Analytics Intern",
-                    company: "ETRA I+D",
-                    link: "#",
-                    description: "Analyzed complex datasets using SQL and Python to drive strategic decisions. Built automated ETL pipelines and visualized key performance indicators using Power BI and Alteryx.",
-                    skills: ["SQL", "C#", "Power BI", "Alteryx"]
+            es: {
+                nav: {
+                    about: 'Sobre mí',
+                    experience: 'Experiencia',
+                    projects: 'Proyectos',
+                    publications: 'Publicaciones e Inv.',
+                    education: 'Educación',
+                    certifications: 'Certificaciones',
+                    volunteering: 'Voluntariado'
                 },
-                {
-                    dates: "2023",
-                    title: "ICT Network Technician",
-                    company: "Pamesa Ceramics",
-                    link: "#",
-                    description: "Managed industrial networking infrastructure. Oversaw fiber optics installations and data room maintenance for high-availability manufacturing systems.",
-                    skills: ["Industrial Networking", "Cybersecurity", "Cisco", "Fiber Optics"]
-                }
-            ],
-            projects: [
-                {
-                    title: "Credit Card Fraud Detection",
-                    description: "Developed a cost-sensitive Random Forest model focused on minimizing financial impact. The system applies probability calibration and threshold optimization to balance precision, recall, and operational cost.",
-                    link: "https://github.com/MarcosIbanezFandos/Credit-Card-Fraud-Detection",
-                    image: null, 
-                    tech: ["Python", "scikit-learn", "Streamlit", "ML"]
+                profile: {
+                    name: "Marcos Ibáñez",
+                    role: "Ingeniería de Telecomunicaciones · FinTech · Data & ML",
+                    tagline: "Aprovechando una sólida base de ingeniería para impulsar la innovación en Finanzas, Estrategia de Negocio e IA.",
+                    about: [
+                        "Mi grado en Ingeniería de Telecomunicaciones me proporcionó una base técnica rigurosa y una profunda comprensión de sistemas complejos. Mientras la ingeniería entrenaba mi mente analítica, mi curiosidad me llevó a explorar campos paralelos donde la tecnología se encuentra con el impacto empresarial. Me he dedicado activamente a dominar la Ciencia de Datos, los Mercados Financieros y las Estrategias de Inversión, con pasión por aplicar la Inteligencia Artificial para optimizar la toma de decisiones y generar valor."
+                    ],
+                    links: [
+                        { name: "GitHub", url: "https://github.com/MarcosIbanezFandos", icon: "github" },
+                        { name: "LinkedIn", url: "https://www.linkedin.com/in/marcos-ibanez/", icon: "linkedin" },
+                        { name: "Email", url: "mailto:marcosibanezfandos@gmail.com", icon: "mail" },
+                        { name: "CV", url: "CV_MarcosIbanez_2026.pdf", icon: "file-text" }
+                    ],
+                    viewResume: "Ver CV Completo"
                 },
-                {
-                    title: "Portfolio Rebalancer",
-                    description: "A Python tool for rebalancing investment portfolios. Loads holdings, computes exact buy/sell orders based on target weights, and simulates post-trade composition. Designed for robo-advisory workflows.",
-                    link: "https://github.com/MarcosIbanezFandos/Portfolio-Rebalancer",
-                    image: null,
-                    tech: ["Python", "Pandas", "Finance", "Quantitative Analysis"]
-                }
-            ],
-            publications: [
-                {
-                    title: "Bachelor Thesis: Fraud Detection in Fintech Transactions using Artificial Intelligence (2025)",
-                    publisher: "Universitat Politècnica de València",
-                    description: "End-to-end ML research focused on detecting fraudulent transactions using cost-sensitive learning to minimize economic impact.",
-                    link: "Memoria_Entrega_Final_MarcosIbanez.pdf"
-                },
-                {
-                    title: "Hybrid Neural Networks (2025)",
-                    publisher: "Technical University of Munich",
-                    description: "Seminar paper analyzing the combination of artificial and spiking neural models for neuromorphic chips (Tianjic), focusing on energy efficiency in edge AI.",
-                    link: "Hybrid_Neural_Networks_Marcos_Ibanez_2025.pdf"
-                }
-            ],
-            education: [
-                {
-                    school: "Universitat Politècnica de València",
-                    degree: "B.Sc. Telecommunications Engineering",
-                    details: "Focus on Telematic Systems"
-                },
-                {
-                    school: "Technical University of Munich",
-                    degree: "Erasmus+ Exchange",
-                    details: "School of Computation, Information and Technology"
-                }
-            ],
-            certifications: [
-                {
-                    title: "🇬🇧 Advanced English, Level C1",
-                    issuer: "Cambridge English",
-                    year: "2017"
-                },
-                {
-                    title: "🇫🇷 Diplôme d’études en langue française, DELF B2",
-                    issuer: "Institut français",
-                    year: "2019"
-                },
-                {
-                    title: "🇩🇪 Goethe-Zertifikat, Niveau B1",
-                    issuer: "Goethe-Institut e.V.",
-                    year: "2018"
-                },
-                {
-                    title: "Grau Mitjà, Nivell C1",
-                    issuer: "Junta Qualificadora de Coneixements de Valencià",
-                    year: "2024"
-                }
-            ],
-            volunteering: [
-                {
-                    role: "Community Development Volunteer",
-                    organization: "Dream Africa Care Foundation",
-                    location: "Accra, Ghana",
-                    description: "Provided youth coaching and educational support to foster community development."
-                }
-            ]
+                experience: [
+                    {
+                        dates: "2022",
+                        title: "Becario de Datos y Analítica",
+                        company: "ETRA I+D",
+                        link: "#",
+                        description: "Análisis de conjuntos de datos complejos utilizando SQL y Python para impulsar decisiones estratégicas. Construcción de pipelines ETL automatizados y visualización de indicadores clave de rendimiento utilizando Power BI y Alteryx.",
+                        skills: ["SQL", "C#", "Power BI", "Alteryx"]
+                    },
+                    {
+                        dates: "2023",
+                        title: "Técnico de Redes TIC",
+                        company: "Pamesa Ceramics",
+                        link: "#",
+                        description: "Gestión de infraestructura de redes industriales. Supervisión de instalaciones de fibra óptica y mantenimiento de salas de datos para sistemas de fabricación de alta disponibilidad.",
+                        skills: ["Redes Industriales", "Ciberseguridad", "Cisco", "Fibra Óptica"]
+                    }
+                ],
+                projects: [
+                    {
+                        title: "Detección de Fraude en Tarjetas de Crédito",
+                        description: "Desarrollo de un modelo Random Forest sensible al coste enfocado en minimizar el impacto financiero. El sistema aplica calibración de probabilidad y optimización de umbrales para equilibrar precisión, recuperación y coste operativo.",
+                        link: "https://github.com/MarcosIbanezFandos/Credit-Card-Fraud-Detection",
+                        image: null, 
+                        tech: ["Python", "scikit-learn", "Streamlit", "ML"]
+                    },
+                    {
+                        title: "Rebalanceador de Carteras",
+                        description: "Herramienta en Python para rebalancear carteras de inversión. Carga las tenencias, calcula las órdenes exactas de compra/venta basadas en pesos objetivo y simula la composición post-negociación. Diseñada para flujos de trabajo de robo-advisory.",
+                        link: "https://github.com/MarcosIbanezFandos/Portfolio-Rebalancer",
+                        image: null,
+                        tech: ["Python", "Pandas", "Finance", "Análisis Cuantitativo"]
+                    }
+                ],
+                publications: [
+                    {
+                        title: "TFG: Detección de Fraude en Transacciones Fintech usando IA (2025)",
+                        publisher: "Universitat Politècnica de València",
+                        description: "Investigación de ML integral centrada en la detección de transacciones fraudulentas utilizando aprendizaje sensible al coste para minimizar el impacto económico.",
+                        link: "Memoria_Entrega_Final_MarcosIbanez.pdf"
+                    },
+                    {
+                        title: "Redes Neuronales Híbridas (2025)",
+                        publisher: "Technical University of Munich",
+                        description: "Artículo de seminario analizando la combinación de modelos neuronales artificiales y de picos para chips neuromórficos (Tianjic), centrándose en la eficiencia energética en Edge AI.",
+                        link: "Hybrid_Neural _Networks_Marcos_Ibanez_2025.pdf"
+                    }
+                ],
+                education: [
+                    {
+                        school: "Universitat Politècnica de València",
+                        degree: "Grado en Ingeniería de Telecomunicaciones",
+                        details: "Mención en Sistemas Telemáticos"
+                    },
+                    {
+                        school: "Technical University of Munich",
+                        degree: "Intercambio Erasmus+",
+                        details: "Escuela de Computación, Información y Tecnología"
+                    }
+                ],
+                certifications: [
+                    {
+                        title: "🇬🇧 Inglés Avanzado, Nivel C1",
+                        issuer: "Cambridge English",
+                        year: "2017"
+                    },
+                    {
+                        title: "🇫🇷 Diplôme d’études en langue française, DELF B2",
+                        issuer: "Institut français",
+                        year: "2019"
+                    },
+                    {
+                        title: "🇩🇪 Goethe-Zertifikat, Niveau B1",
+                        issuer: "Goethe-Institut e.V.",
+                        year: "2018"
+                    },
+                    {
+                        title: "Grau Mitjà, Nivell C1",
+                        issuer: "Junta Qualificadora de Coneixements de Valencià",
+                        year: "2024"
+                    }
+                ],
+                volunteering: [
+                    {
+                        role: "Voluntario de Desarrollo Comunitario",
+                        organization: "Dream Africa Care Foundation",
+                        location: "Accra, Ghana",
+                        description: "Coaching juvenil y apoyo educativo para fomentar el desarrollo comunitario."
+                    }
+                ]
+            }
         };
 
         // --- Components ---
@@ -252,6 +380,9 @@
             });
             const [activeSection, setActiveSection] = useState('about');
             const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+            const [language, setLanguage] = useState('en'); // 'en' or 'es'
+
+            const content = translations[language];
 
             useEffect(() => {
                 const root = window.document.documentElement;
@@ -301,14 +432,18 @@
                 setTheme(prev => prev === 'dark' ? 'light' : 'dark');
             };
 
+            const toggleLanguage = () => {
+                setLanguage(prev => prev === 'en' ? 'es' : 'en');
+            };
+
             const navItems = [
-                { id: 'about', label: 'About' },
-                { id: 'experience', label: 'Experience' },
-                { id: 'projects', label: 'Projects' },
-                { id: 'publications', label: 'Publications & Research' },
-                { id: 'education', label: 'Education' },
-                { id: 'certifications', label: 'Certifications' },
-                { id: 'volunteering', label: 'Volunteering' },
+                { id: 'about', label: content.nav.about },
+                { id: 'experience', label: content.nav.experience },
+                { id: 'projects', label: content.nav.projects },
+                { id: 'publications', label: content.nav.publications },
+                { id: 'education', label: content.nav.education },
+                { id: 'certifications', label: content.nav.certifications },
+                { id: 'volunteering', label: content.nav.volunteering },
             ];
 
             return (
@@ -322,14 +457,27 @@
                         }}
                     ></div>
 
-                    {/* Fixed Theme Toggle */}
-                    <button 
-                        onClick={toggleTheme}
-                        className="fixed top-6 right-6 z-50 p-2 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-teal-300 shadow-lg hover:scale-110 transition-transform duration-200"
-                        aria-label="Toggle theme"
-                    >
-                        {theme === 'dark' ? <Icon name="sun" size={20} /> : <Icon name="moon" size={20} />}
-                    </button>
+                    {/* Fixed Controls Container */}
+                    <div className="fixed top-6 right-6 z-50 flex gap-3">
+                         {/* Language Toggle */}
+                        <button 
+                            onClick={toggleLanguage}
+                            className="p-2 rounded-full bg-slate-200 dark:bg-slate-800 text-2xl shadow-lg hover:scale-110 transition-transform duration-200"
+                            aria-label="Toggle language"
+                            title={language === 'en' ? "Switch to Spanish" : "Cambiar a Inglés"}
+                        >
+                            {language === 'en' ? "🇬🇧" : "🇪🇸"}
+                        </button>
+
+                        {/* Theme Toggle */}
+                        <button 
+                            onClick={toggleTheme}
+                            className="p-2 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-teal-300 shadow-lg hover:scale-110 transition-transform duration-200"
+                            aria-label="Toggle theme"
+                        >
+                            {theme === 'dark' ? <Icon name="sun" size={20} /> : <Icon name="moon" size={20} />}
+                        </button>
+                    </div>
 
                     <div className="lg:flex lg:justify-between lg:gap-4 relative z-40">
                         
@@ -396,9 +544,9 @@
                         <main id="content" className="pt-24 lg:w-1/2 lg:py-24">
                             
                             {/* ABOUT SECTION */}
-                            <section id="about" className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24" aria-label="About me">
+                            <section id="about" className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24" aria-label={content.nav.about}>
                                 <div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-slate-50/75 dark:bg-slate-900/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
-                                    <h2 className="text-sm font-bold uppercase tracking-widest text-slate-900 dark:text-slate-200 lg:sr-only">About</h2>
+                                    <h2 className="text-sm font-bold uppercase tracking-widest text-slate-900 dark:text-slate-200 lg:sr-only">{content.nav.about}</h2>
                                 </div>
                                 <div className="text-slate-600 dark:text-slate-400">
                                     {content.profile.about.map((paragraph, index) => (
@@ -410,9 +558,9 @@
                             </section>
 
                             {/* EXPERIENCE SECTION */}
-                            <section id="experience" className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24" aria-label="Work experience">
+                            <section id="experience" className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24" aria-label={content.nav.experience}>
                                 <div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-slate-50/75 dark:bg-slate-900/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
-                                    <h2 className="text-sm font-bold uppercase tracking-widest text-slate-900 dark:text-slate-200 lg:sr-only">Experience</h2>
+                                    <h2 className="text-sm font-bold uppercase tracking-widest text-slate-900 dark:text-slate-200 lg:sr-only">{content.nav.experience}</h2>
                                 </div>
                                 <div className="grid gap-8">
                                     {content.experience.map((job, index) => (
@@ -449,7 +597,7 @@
                                 <div className="mt-12">
                                     <a href={content.profile.links[3].url} className="inline-flex items-center font-medium leading-tight text-slate-900 dark:text-slate-200 group" aria-label="View Full Resume">
                                         <span className="border-b border-transparent pb-px transition group-hover:border-teal-300 motion-reduce:transition-none">
-                                            View Full Resume 
+                                            {content.profile.viewResume} 
                                         </span>
                                         <span className="ml-1 whitespace-nowrap">
                                             <Icon name="arrow-right" size={16} className="inline-block ml-1 transition-transform group-hover:translate-x-1" />
@@ -459,9 +607,9 @@
                             </section>
 
                             {/* PROJECTS SECTION */}
-                            <section id="projects" className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24" aria-label="Selected projects">
+                            <section id="projects" className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24" aria-label={content.nav.projects}>
                                 <div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-slate-50/75 dark:bg-slate-900/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
-                                    <h2 className="text-sm font-bold uppercase tracking-widest text-slate-900 dark:text-slate-200 lg:sr-only">Projects</h2>
+                                    <h2 className="text-sm font-bold uppercase tracking-widest text-slate-900 dark:text-slate-200 lg:sr-only">{content.nav.projects}</h2>
                                 </div>
                                 <div className="grid gap-8">
                                     {content.projects.map((project, index) => (
@@ -502,9 +650,9 @@
                             </section>
                             
                             {/* PUBLICATIONS SECTION */}
-                            <section id="publications" className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24" aria-label="Publications & Research">
+                            <section id="publications" className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24" aria-label={content.nav.publications}>
                                 <div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-slate-50/75 dark:bg-slate-900/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
-                                    <h2 className="text-sm font-bold uppercase tracking-widest text-slate-900 dark:text-slate-200 lg:sr-only">Publications & Research</h2>
+                                    <h2 className="text-sm font-bold uppercase tracking-widest text-slate-900 dark:text-slate-200 lg:sr-only">{content.nav.publications}</h2>
                                 </div>
                                 
                                 <div className="grid gap-8">
@@ -524,9 +672,9 @@
                             </section>
 
                             {/* EDUCATION SECTION */}
-                            <section id="education" className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24" aria-label="Education">
+                            <section id="education" className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24" aria-label={content.nav.education}>
                                 <div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-slate-50/75 dark:bg-slate-900/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
-                                    <h2 className="text-sm font-bold uppercase tracking-widest text-slate-900 dark:text-slate-200 lg:sr-only">Education</h2>
+                                    <h2 className="text-sm font-bold uppercase tracking-widest text-slate-900 dark:text-slate-200 lg:sr-only">{content.nav.education}</h2>
                                 </div>
                                 <div className="grid gap-4">
                                     {content.education.map((edu, idx) => (
@@ -540,9 +688,9 @@
                             </section>
 
                             {/* CERTIFICATIONS SECTION */}
-                            <section id="certifications" className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24" aria-label="Certifications">
+                            <section id="certifications" className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24" aria-label={content.nav.certifications}>
                                 <div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-slate-50/75 dark:bg-slate-900/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
-                                    <h2 className="text-sm font-bold uppercase tracking-widest text-slate-900 dark:text-slate-200 lg:sr-only">Certifications</h2>
+                                    <h2 className="text-sm font-bold uppercase tracking-widest text-slate-900 dark:text-slate-200 lg:sr-only">{content.nav.certifications}</h2>
                                 </div>
                                 <div className="grid gap-4">
                                     {content.certifications.map((cert, idx) => (
@@ -555,9 +703,9 @@
                             </section>
 
                             {/* VOLUNTEERING SECTION */}
-                            <section id="volunteering" className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24" aria-label="Volunteering">
+                            <section id="volunteering" className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24" aria-label={content.nav.volunteering}>
                                 <div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-slate-50/75 dark:bg-slate-900/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
-                                    <h2 className="text-sm font-bold uppercase tracking-widest text-slate-900 dark:text-slate-200 lg:sr-only">Volunteering</h2>
+                                    <h2 className="text-sm font-bold uppercase tracking-widest text-slate-900 dark:text-slate-200 lg:sr-only">{content.nav.volunteering}</h2>
                                 </div>
                                 <div className="grid gap-4">
                                     {content.volunteering.map((vol, idx) => (
