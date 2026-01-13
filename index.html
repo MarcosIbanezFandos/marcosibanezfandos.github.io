@@ -86,9 +86,7 @@
                 role: "Telecommunications Engineering · FinTech · Data & ML",
                 tagline: "Leveraging a solid engineering foundation to drive innovation in Finance, Business Strategy, and AI.",
                 about: [
-                    "My degree in Telecommunications Engineering provided me with a rigorous technical foundation and a deep understanding of complex systems. While engineering trained my analytical mind, my curiosity led me to explore parallel fields where technology meets business impact.",
-                    "I have actively dedicated myself to mastering Data Science, Financial Markets, and Investment Strategies. I am particularly passionate about understanding how Artificial Intelligence can be applied to these domains to optimize decision-making and generate value.",
-                    "In my free time, I enjoy practicing a wide variety of sports, reading, and spending quality time with my friends and family."
+                    "My degree in Telecommunications Engineering provided me with a rigorous technical foundation and a deep understanding of complex systems. While engineering trained my analytical mind, my curiosity led me to explore parallel fields where technology meets business impact. I have actively dedicated myself to mastering Data Science, Financial Markets, and Investment Strategies, with a passion for applying Artificial Intelligence to optimize decision-making and generate value."
                 ],
                 links: [
                     { name: "GitHub", url: "https://github.com/MarcosIbanezFandos", icon: "github" },
@@ -253,9 +251,26 @@
                                     {content.profile.tagline}
                                 </p>
 
+                                {/* Social Links (Moved Here) */}
+                                <ul className="mt-4 flex items-center" aria-label="Social media">
+                                    {content.profile.links.map((link, i) => (
+                                        <li key={i} className="mr-5 text-xs shrink-0">
+                                            <a 
+                                                href={link.url} 
+                                                target="_blank" 
+                                                rel="noreferrer"
+                                                className="block hover:text-slate-900 dark:hover:text-teal-300 transition-colors"
+                                                aria-label={link.name}
+                                            >
+                                                <Icon name={link.icon} size={24} />
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ul>
+
                                 {/* Navigation */}
                                 <nav className="nav hidden lg:block" aria-label="In-page jump links">
-                                    <ul className="mt-16 w-max">
+                                    <ul className="mt-12 w-max">
                                         <li>
                                             <a href="#about" className="group flex items-center py-3 active">
                                                 <span className="nav-indicator mr-4 h-px w-8 bg-slate-600 dark:bg-slate-600 transition-all group-hover:w-16 group-hover:bg-slate-900 dark:group-hover:bg-slate-200"></span>
@@ -301,23 +316,6 @@
                                     </ul>
                                 </nav>
                             </div>
-
-                            {/* Social Links */}
-                            <ul className="ml-1 mt-8 flex items-center" aria-label="Social media">
-                                {content.profile.links.map((link, i) => (
-                                    <li key={i} className="mr-5 text-xs shrink-0">
-                                        <a 
-                                            href={link.url} 
-                                            target="_blank" 
-                                            rel="noreferrer"
-                                            className="block hover:text-slate-900 dark:hover:text-teal-300 transition-colors"
-                                            aria-label={link.name}
-                                        >
-                                            <Icon name={link.icon} size={24} />
-                                        </a>
-                                    </li>
-                                ))}
-                            </ul>
                         </header>
 
                         {/* --- RIGHT COLUMN: Content --- */}
