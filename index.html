@@ -4,66 +4,49 @@
   <meta charset="UTF-8" />
   <title>Marcos Ibáñez Fandos – Portfolio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- =========================
+        DESIGN SYSTEM
+  ========================== -->
   <style>
     :root {
-      --bg: #f3f4f6;
-      --bg-card: #ffffff;
-      --border: #e5e7eb;
-      --text-main: #111827;
-      --text-muted: #6b7280;
-      --accent: #2563eb;
-      --badge-bg: #111827;
-      --badge-text: #f9fafb;
-      --shadow-soft: 0 8px 20px rgba(15, 23, 42, 0.08);
-      --radius-card: 16px;
-    }
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface-muted: #f1f5f9;
+      --border: #e2e8f0;
 
-    body.theme-light {
-      --bg: #f3f4f6;
-      --bg-card: #ffffff;
-      --border: #e5e7eb;
-      --text-main: #111827;
-      --text-muted: #6b7280;
+      --text-main: #020617;
+      --text-muted: #64748b;
+
       --accent: #2563eb;
-      --badge-bg: #111827;
-      --badge-text: #f9fafb;
-      --shadow-soft: 0 8px 20px rgba(15, 23, 42, 0.08);
+      --accent-soft: rgba(37, 99, 235, 0.12);
+
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+
+      --shadow-sm: 0 1px 2px rgba(2,6,23,0.06);
+      --shadow-md: 0 8px 24px rgba(2,6,23,0.08);
+      --shadow-lg: 0 20px 40px rgba(2,6,23,0.12);
+
+      --transition: 220ms cubic-bezier(.4,0,.2,1);
     }
 
     body.theme-dark {
       --bg: #020617;
-      --bg-card: #0b1120;
+      --surface: #0b1120;
+      --surface-muted: #111827;
       --border: #1f2937;
+
       --text-main: #e5e7eb;
       --text-muted: #9ca3af;
+
       --accent: #38bdf8;
-      --badge-bg: #111827;
-      --badge-text: #f9fafb;
-      --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.6);
-    }
+      --accent-soft: rgba(56,189,248,0.15);
 
-    body.theme-midnight {
-      --bg: #020617;
-      --bg-card: #020617;
-      --border: #1d2a4a;
-      --text-main: #e5e7eb;
-      --text-muted: #9ca3af;
-      --accent: #4f46e5;
-      --badge-bg: #0f172a;
-      --badge-text: #e5e7eb;
-      --shadow-soft: 0 12px 30px rgba(15, 23, 42, 0.7);
-    }
-
-    body.theme-emerald {
-      --bg: #ecfdf5;
-      --bg-card: #ffffff;
-      --border: #bbf7d0;
-      --text-main: #064e3b;
-      --text-muted: #047857;
-      --accent: #10b981;
-      --badge-bg: #047857;
-      --badge-text: #ecfdf5;
-      --shadow-soft: 0 10px 24px rgba(16, 185, 129, 0.25);
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.4);
+      --shadow-md: 0 12px 30px rgba(0,0,0,0.5);
+      --shadow-lg: 0 30px 60px rgba(0,0,0,0.6);
     }
 
     * {
@@ -72,9 +55,14 @@
 
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg);
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: radial-gradient(
+        1200px 600px at 50% -200px,
+        var(--accent-soft),
+        transparent 70%
+      ), var(--bg);
       color: var(--text-main);
+      line-height: 1.6;
     }
 
     a {
@@ -86,519 +74,314 @@
       text-decoration: underline;
     }
 
+    /* =========================
+        LAYOUT
+    ========================== */
+
     .page {
-      max-width: 1200px;
+      max-width: 1240px;
       margin: 0 auto;
-      padding: 2rem 2rem 2.5rem;
-      min-height: 100vh;
+      padding: 2.5rem 2rem 3rem;
+      display: grid;
+      grid-template-columns: 320px minmax(0, 1fr);
+      gap: 2rem;
+    }
+
+    @media (max-width: 1024px) {
+      .page {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* =========================
+        SIDEBAR
+    ========================== */
+
+    aside {
+      position: sticky;
+      top: 2rem;
+      align-self: start;
       display: flex;
       flex-direction: column;
-      gap: 1.75rem;
+      gap: 1.25rem;
     }
-
-    .layout {
-      display: grid;
-      grid-template-columns: minmax(280px, 330px) minmax(0, 1fr);
-      gap: 1.75rem;
-      align-items: flex-start;
-    }
-
-    /* LEFT COLUMN (PROFILE) */
 
     .card {
-      background: var(--bg-card);
-      border-radius: var(--radius-card);
+      background: var(--surface);
+      border-radius: var(--radius-lg);
       border: 1px solid var(--border);
-      box-shadow: var(--shadow-soft);
+      box-shadow: var(--shadow-md);
       padding: 1.5rem;
+      transition: transform var(--transition), box-shadow var(--transition);
     }
 
-    .profile-card {
+    .card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+
+    /* PROFILE */
+
+    .profile {
       text-align: center;
     }
 
     .avatar {
-      width: 110px;
-      height: 110px;
+      width: 112px;
+      height: 112px;
       border-radius: 999px;
-      background: #e5e7eb;
       margin: 0 auto 1rem;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.5rem;
-      font-weight: 600;
-      color: var(--text-muted);
-    }
-
-    .name {
-      font-size: 1.4rem;
+      background: linear-gradient(135deg, var(--accent), #6366f1);
+      display: grid;
+      place-items: center;
       font-weight: 700;
-      margin-bottom: 0.25rem;
+      font-size: 2.2rem;
+      color: #fff;
+      box-shadow: var(--shadow-md);
     }
 
-    .role {
+    .profile h1 {
+      font-size: 1.45rem;
+      margin: 0.25rem 0;
+      letter-spacing: -0.01em;
+    }
+
+    .profile p {
       font-size: 0.95rem;
       color: var(--text-muted);
-      margin-bottom: 1rem;
+      margin-bottom: 1.2rem;
     }
 
-    .btn-primary {
-      display: inline-block;
-      padding: 0.55rem 1.2rem;
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0.6rem 1.3rem;
       border-radius: 999px;
       background: var(--accent);
-      color: #ffffff;
+      color: #fff;
       font-size: 0.9rem;
       font-weight: 500;
-      border: none;
+      transition: filter var(--transition), transform var(--transition);
     }
 
-    .btn-primary:hover {
+    .cta:hover {
       filter: brightness(1.05);
+      transform: translateY(-1px);
       text-decoration: none;
     }
 
-    .section-title-sm {
-      font-size: 0.85rem;
+    /* SIDEBAR SECTIONS */
+
+    .section-title {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
       color: var(--text-muted);
-      margin: 1.25rem 0 0.55rem;
+      margin-bottom: 0.5rem;
     }
 
-    .link-list {
+    .list {
       list-style: none;
       padding: 0;
       margin: 0;
-      text-align: left;
       font-size: 0.9rem;
     }
 
-    .link-list li + li {
-      margin-top: 0.25rem;
+    .list li + li {
+      margin-top: 0.35rem;
     }
 
-    .chip-row {
+    .chips {
       display: flex;
       flex-wrap: wrap;
       gap: 0.4rem;
     }
 
     .chip {
-      font-size: 0.8rem;
-      padding: 0.25rem 0.55rem;
+      padding: 0.25rem 0.6rem;
+      font-size: 0.75rem;
       border-radius: 999px;
-      background: var(--badge-bg);
-      color: var(--badge-text);
-      white-space: nowrap;
-    }
-
-    .sidebar-section + .sidebar-section {
-      margin-top: 1rem;
-    }
-
-    .sidebar-section .item-title {
-      font-size: 0.9rem;
-      font-weight: 500;
-    }
-
-    .sidebar-section .item-meta {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
-
-    .sidebar-section .item {
-      margin-bottom: 0.5rem;
-    }
-
-    /* RIGHT COLUMN (CONTENT) */
-
-    .content-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.75rem;
-    }
-
-    .content-title {
-      font-size: 1.1rem;
-      font-weight: 600;
-    }
-
-    .see-all {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1rem;
-    }
-
-    .project-card {
-      position: relative;
-      padding-bottom: 1.3rem;
-    }
-
-    .project-title {
-      font-size: 0.98rem;
-      font-weight: 600;
-      margin: 0 0 0.15rem;
-    }
-
-    .project-subtitle {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-bottom: 0.4rem;
-    }
-
-    .project-desc {
-      font-size: 0.85rem;
-      color: var(--text-main);
-      margin-bottom: 0.6rem;
-    }
-
-    .project-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
-
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
-      font-size: 0.8rem;
-      padding: 0.15rem 0.5rem;
-      border-radius: 999px;
-      background: #f3f4f6;
-    }
-
-    .pill-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: #f97316;
-    }
-
-    .section-block {
-      margin-top: 1.5rem;
-    }
-
-    .two-column {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1rem;
-    }
-
-    .publication-title {
-      font-size: 0.95rem;
-      font-weight: 600;
-      margin-bottom: 0.15rem;
-    }
-
-    .publication-meta {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-bottom: 0.5rem;
-    }
-
-    .theme-switcher {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
-
-    .theme-switcher label {
-      font-weight: 500;
-    }
-
-    .theme-select {
-      padding: 0.25rem 0.5rem;
-      border-radius: 999px;
+      background: var(--surface-muted);
       border: 1px solid var(--border);
-      background: var(--bg-card);
+    }
+
+    /* =========================
+        MAIN CONTENT
+    ========================== */
+
+    main {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header h2 {
+      font-size: 1.25rem;
+      margin: 0;
+    }
+
+    .theme-switch {
       font-size: 0.85rem;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 1px solid var(--border);
       color: var(--text-main);
     }
 
-    .footer {
+    /* PROJECTS */
+
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .project {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .project h3 {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .project .subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .project p {
+      font-size: 0.85rem;
+    }
+
+    .project footer {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* FOOTER */
+
+    footer {
       text-align: center;
       font-size: 0.8rem;
       color: var(--text-muted);
-      padding: 0.75rem 0 0.5rem;
-    }
-
-    @media (max-width: 1024px) {
-      .layout {
-        grid-template-columns: minmax(0, 1fr);
-      }
-      .page {
-        padding: 1.75rem 1.5rem 2rem;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .page {
-        padding: 1.5rem 1.25rem 1.75rem;
-      }
-      .grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
-      .theme-switcher {
-        justify-content: center;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .page {
-        padding: 1.25rem 1rem 1.5rem;
-      }
-      .card {
-        padding: 1.25rem;
-      }
+      margin-top: 2rem;
     }
   </style>
 </head>
+
 <body class="theme-light">
-  <div class="page">
-    <div class="theme-switcher">
-      <label for="theme-select">Theme:</label>
-      <select id="theme-select" class="theme-select">
+
+<div class="page">
+
+  <!-- SIDEBAR -->
+  <aside>
+
+    <div class="card profile">
+      <div class="avatar">MI</div>
+      <h1>Marcos Ibáñez Fandos</h1>
+      <p>Telecommunications Engineering<br>FinTech · Data · Machine Learning</p>
+      <a class="cta" href="CV_MarcosIbanez_2026.pdf" target="_blank">
+        Download Resume
+      </a>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Contact</div>
+      <ul class="list">
+        <li>GitHub · <a href="https://github.com/MarcosIbanezFandos" target="_blank">@MarcosIbanezFandos</a></li>
+        <li>LinkedIn · <a href="https://www.linkedin.com/in/marcos-ibanez/" target="_blank">marcos-ibanez</a></li>
+        <li>Email · <a href="mailto:marcosibanezfandos@gmail.com">marcosibanezfandos@gmail.com</a></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Tech Stack</div>
+      <div class="chips">
+        <span class="chip">Python</span>
+        <span class="chip">SQL</span>
+        <span class="chip">MATLAB</span>
+        <span class="chip">Power BI</span>
+        <span class="chip">Excel</span>
+        <span class="chip">Git</span>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- MAIN -->
+  <main>
+
+    <div class="header">
+      <h2>Selected Projects</h2>
+      <select id="theme" class="theme-switch">
         <option value="theme-light">Light</option>
         <option value="theme-dark">Dark</option>
-        <option value="theme-midnight">Midnight</option>
-        <option value="theme-emerald">Emerald</option>
       </select>
     </div>
-    <div class="layout">
-      <!-- LEFT COLUMN -->
-      <aside>
-        <div class="card profile-card">
-          <div class="avatar">
-            <!-- Si tienes foto, sustituye por <img src="tu_foto.jpg" alt="Marcos" /> -->
-            MI
-          </div>
-          <div class="name">Marcos Ibáñez Fandos</div>
-          <div class="role">
-            Telecommunications Engineering · FinTech · Data & Machine Learning
-          </div>
-          <a
-            class="btn-primary"
-            href="CV_MarcosIbanez_2026.pdf"
-            target="_blank"
-          >
-            Download Resume
-          </a>
-        </div>
 
-        <div class="card">
-          <div class="sidebar-section">
-            <div class="section-title-sm">Contact</div>
-            <ul class="link-list">
-              <li><strong>GitHub:</strong> <a href="https://github.com/MarcosIbanezFandos" target="_blank">@MarcosIbanezFandos</a></li>
-              <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/marcos-ibanez/" target="_blank">marcos-ibanez</a></li>
-              <li><strong>Email:</strong> <a href="mailto:marcosibanezfandos@gmail.com">marcosibanezfandos@gmail.com</a></li>
-            </ul>
-          </div>
-        </div>
+    <section class="projects">
 
-        <div class="card">
-          <div class="sidebar-section">
-            <div class="section-title-sm">Tech Stack</div>
-            <div class="chip-row">
-              <span class="chip">Python</span>
-              <span class="chip">SQL</span>
-              <span class="chip">MATLAB</span>
-              <span class="chip">Excel</span>
-              <span class="chip">Power BI</span>
-              <span class="chip">GitHub</span>
-              <span class="chip">Jira</span>
-            </div>
-          </div>
-        </div>
+      <article class="card project">
+        <h3>Credit Card Fraud Detection</h3>
+        <div class="subtitle">Cost-sensitive ML system for banking fraud</div>
+        <p>
+          End-to-end fraud detection model using cost-sensitive Random Forests,
+          probability calibration and threshold optimisation to minimise real
+          economic loss.
+        </p>
+        <footer>
+          <span>Python · scikit-learn · Streamlit</span>
+          <a href="https://github.com/MarcosIbanezFandos/Credit-Card-Fraud-Detection" target="_blank">View →</a>
+        </footer>
+      </article>
 
-        <div class="card">
-          <div class="sidebar-section">
-            <div class="section-title-sm">Experience</div>
+      <article class="card project">
+        <h3>Portfolio Rebalancer</h3>
+        <div class="subtitle">Systematic portfolio management tool</div>
+        <p>
+          Computes precise buy/sell orders to rebalance portfolios against
+          target allocations, supporting what-if scenarios and recurring cycles.
+        </p>
+        <footer>
+          <span>Python · pandas · Finance</span>
+          <a href="https://github.com/MarcosIbanezFandos/Portfolio-Rebalancer" target="_blank">View →</a>
+        </footer>
+      </article>
 
-            <div class="item">
-              <div class="item-title">Data & Analytics Intern – ETRA I+D</div>
-              <div class="item-meta">SQL· C# · Power BI · Alteryx</div>
-            </div>
+    </section>
 
-            <div class="item">
-              <div class="item-title">ICT Network Technician – Pamesa Ceramics</div>
-              <div class="item-meta">Industrial networking · Cybersecurity · Fiber optics · Data rooms</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="sidebar-section">
-            <div class="section-title-sm">Education</div>
-
-            <div class="item">
-              <div class="item-title">B.Sc. Telecommunications Engineering</div>
-              <div class="item-meta">Universitat Politècnica de València · Telematic Systems</div>
-            </div>
-
-            <div class="item">
-              <div class="item-title">Erasmus+ at Technical University of Munich</div>
-              <div class="item-meta">School of Computation, Information and Technology</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="sidebar-section">
-            <div class="section-title-sm">Certifications</div>
-
-            <div class="item">
-              <div class="item-title">Advanced English, Level C1</div>
-              <div class="item-meta">Cambridge English - 2017</div>
-            </div>
-
-            <div class="item">
-              <div class="item-title">Diplôme d’études en langue française, DELF B2</div>
-              <div class="item-meta">Institut françai - 2019</div>
-            </div>
-
-            <div class="item">
-              <div class="item-title">Goethe-Zertifikat, Niveau B1</div>
-              <div class="item-meta">Goethe-Institut e.V. - 2018</div>
-            </div>
-
-            <div class="item">
-              <div class="item-title">Grau Mitjà, Nivell C1</div>
-              <div class="item-meta">Junta Qualificadora de Coneixements de Valencià - 2024</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="sidebar-section">
-            <div class="section-title-sm">Volunteering</div>
-            <div class="item">
-              <div class="item-title">Community Development Volunteer – Accra, Ghana</div>
-              <div class="item-meta">Dream Africa Care Foundation · Youth coaching and educational support</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="sidebar-section">
-            <div class="section-title-sm">Interests</div>
-            <div class="chip-row">
-              <span class="chip">Fintech</span>
-              <span class="chip">Data Analysis</span>
-              <span class="chip">Business Development</span>
-              <span class="chip">Invesment</span>
-              <span class="chip">Quant / Risk</span>
-            </div>
-          </div>
-        </div>
-      </aside>
-
-      <!-- RIGHT COLUMN -->
-      <main>
-        <!-- GitHub Projects -->
-        <section class="card">
-          <div class="content-header">
-            <div class="content-title">GitHub Projects</div>
-            <!-- <a class="see-all" href="https://github.com/MarcosIbanezFandos?tab=repositories" target="_blank">See all</a> -->
-          </div>
-
-          <div class="grid">
-            <!-- PROJECT 1 -->
-            <article class="card project-card">
-              <h3 class="project-title">Credit Card Fraud Detection</h3>
-              <p class="project-subtitle">
-                End-to-end ML project for detecting fraudulent transactions.
-              </p>
-              <p class="project-desc">
-                This Bachelor's Thesis develops a bank fraud detection model using Artificial Intelligence, based on a cost-sensitive Random Forest focused on minimizing the real economic impact of prediction errors. Using the public Kaggle Credit Card Fraud Detection dataset, several models are trained and evaluated, explicitly addressing class imbalance and the effect of transaction amount on decision cost. The system applies probability calibration and threshold optimization to balance precision, recall and operational cost.
-                
-                In addition, an interactive application is implemented to simulate real-time fraud detection and illustrate how the model could be integrated into FinTech platforms. The results show that the cost-sensitive approach improves the detection of relevant fraud cases while reducing financial losses and limiting user friction.
-              </p>
-              <div class="project-footer">
-                <span>Python · scikit-learn · Streamlit</span>
-                <a href="https://github.com/MarcosIbanezFandos/Credit-Card-Fraud-Detection" target="_blank">View repo →</a>
-              </div>
-            </article>
-            <article class="card project-card">
-              <h3 class="project-title">Portfolio Rebalancer</h3>
-              <p class="project-subtitle">
-                Python tool for rebalancing investment portfolios to target allocations.
-              </p>
-              <p class="project-desc">
-                Loads current holdings and target weights, computes the exact buy/sell orders required to rebalance, and shows the resulting post-trade portfolio composition in terms of units, values and weights. This allows you to correct portfolio drift, systematically realign the portfolio with a target strategic asset allocation and keep risk in line with the investor’s profile.
-                
-                The tool is designed to support recurring rebalance cycles and what-if scenarios (changing target weights, adding new assets, modifying contributions), making it a lightweight rebalancing engine that could be integrated into fintech tooling for portfolio management, robo-advisory workflows or internal risk-control dashboards.
-              </p>
-              <div class="project-footer">
-                <span>Python · pandas · Finance</span>
-                <a href="https://github.com/MarcosIbanezFandos/Portfolio-Rebalancer" target="_blank">View repo →</a>
-              </div>
-            </article>
-            <!-- Puedes añadir más proyectos copiando/pegando este bloque -->
-          </div>
-        </section>
-        <section class="section-block card">
-          <div class="content-header">
-            <div class="content-title">Publications</div>
-          </div>
-
-          <div class="two-column">
-            <article>
-              <div class="publication-title">Hybrid Neural Networks (2025) </div>
-              <div class="publication-meta">Technical University of Munich · Chair of AI Processor Design</div>
-              <p class="project-desc">
-                Seminar paper on hybrid neural networks (HNNs), analysing how the combination of artificial and spiking neural
-                models, hybrid units and neuromorphic chips such as Tianjic can bridge learning flexibility and energy efficiency
-                for event-based robotics, edge AI and brain-computer interfaces.
-              </p>
-            </article>
-          </div>
-        </section>
-      </main>
-    </div>
-
-    <div class="footer">
+    <footer>
       © <span id="year"></span> Marcos Ibáñez Fandos
-    </div>
-  </div>
+    </footer>
 
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-    (function() {
-      const body = document.body;
-      const select = document.getElementById('theme-select');
-      const stored = window.localStorage ? localStorage.getItem('portfolio-theme') : null;
-      const defaultTheme = stored || 'theme-light';
+  </main>
 
-      body.classList.remove('theme-light', 'theme-dark', 'theme-midnight', 'theme-emerald');
-      body.classList.add(defaultTheme);
-      if (select) {
-        select.value = defaultTheme;
-        select.addEventListener('change', () => {
-          const value = select.value;
-          body.classList.remove('theme-light', 'theme-dark', 'theme-midnight', 'theme-emerald');
-          body.classList.add(value);
-          if (window.localStorage) {
-            localStorage.setItem('portfolio-theme', value);
-          }
-        });
-      }
-    })();
-  </script>
+</div>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+  const select = document.getElementById("theme");
+  select.addEventListener("change", () => {
+    document.body.className = select.value;
+  });
+</script>
+
 </body>
 </html>
