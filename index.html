@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Portfolio | Marcos Ibáñez</title>
+    <title>Portfolio | Marcos Ibáñez</title>
     
     <!-- Fonts: Inter for that clean, professional engineering look -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -95,7 +95,7 @@
                 },
                 profile: {
                     name: "Marcos Ibáñez",
-                    role: "Telecommunications Engineer · FinTech · Data & ML",
+                    role: "Telecom Engineer · FinTech · Data & ML",
                     tagline: "Leveraging a solid engineering foundation to drive innovation in Finance, Business Strategy, and AI.",
                     about: [
                         "My degree in Telecommunications Engineering provided me with a rigorous technical foundation and a deep understanding of complex systems. While engineering trained my analytical mind, my curiosity led me to explore parallel fields where technology meets business impact. I have been actively expanding my knowledge in Data Science, Financial Markets, and Investment Strategies, with a passion for applying Artificial Intelligence to optimize decision-making and generate value."
@@ -112,8 +112,8 @@
                     {
                         dates: "2022",
                         title: "Data Software Development Intern",
-                        company: "ETRA I+D",
-                        link: "#",
+                        company: "ETRA R&D",
+                        link: "https://www.grupoetra.com",
                         description: "Analyzed complex datasets using SQL and Python to drive strategic decisions. Built automated ETL pipelines and visualized key performance indicators using Power BI and Alteryx.",
                         skills: ["SQL", "C#", "Power BI", "Alteryx"]
                     },
@@ -121,7 +121,7 @@
                         dates: "2023",
                         title: "Network Infrastructure Technician",
                         company: "Pamesa Ceramics",
-                        link: "#",
+                        link: "https://www.pamesa.com/index.html",
                         description: "Managed industrial networking infrastructure. Oversaw fiber optics installations and data room maintenance for high-availability manufacturing systems.",
                         skills: ["Industrial Networking", "Cybersecurity", "Cisco", "Fiber Optics"]
                     }
@@ -173,7 +173,7 @@
                 certifications: [
                     {
                         title: "🇪🇸 Native Spanish",
-                        issuer: "Mother Tongue",
+                        issuer: "",
                         year: ""
                     },
                     {
@@ -237,7 +237,7 @@
                         dates: "2022",
                         title: "Ingeniero de Datos en Prácticas",
                         company: "ETRA I+D",
-                        link: "#",
+                        link: "https://www.grupoetra.com",
                         description: "Análisis de conjuntos de datos complejos utilizando SQL y Python para impulsar decisiones estratégicas. Construcción de pipelines ETL automatizados y visualización de indicadores clave de rendimiento utilizando Power BI y Alteryx.",
                         skills: ["SQL", "C#", "Power BI", "Alteryx"]
                     },
@@ -245,7 +245,7 @@
                         dates: "2023",
                         title: "Técnico en Instalaciones de Redes",
                         company: "Pamesa Cerámica",
-                        link: "#",
+                        link: "https://www.pamesa.com/index.html",
                         description: "Gestión de infraestructura de redes industriales. Supervisión de instalaciones de fibra óptica y mantenimiento de salas de datos para sistemas de fabricación de alta disponibilidad.",
                         skills: ["Redes Industriales", "Ciberseguridad", "Cisco", "Fibra Óptica"]
                     }
@@ -297,11 +297,11 @@
                 certifications: [
                     {
                         title: "🇪🇸 Español Nativo",
-                        issuer: "Lengua Materna",
+                        issuer: "",
                         year: ""
                     },
                     {
-                        title: "🇬🇧 Inglés Avanzado, Nivel C1",
+                        title: "🇬🇧 Advanced English, Level C1",
                         issuer: "Cambridge English",
                         year: "2017"
                     },
@@ -712,7 +712,14 @@
                                     {content.certifications.map((cert, idx) => (
                                         <div key={idx} className="relative rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-6">
                                             <h5 className="font-medium text-slate-900 dark:text-slate-200 text-sm">{cert.title}</h5>
-                                            <div className="text-sm text-slate-500">{cert.issuer} · {cert.year}</div>
+                                            {/* Logic to hide line if empty */}
+                                            {(cert.issuer || cert.year) && (
+                                                <div className="text-sm text-slate-500">
+                                                    {cert.issuer}
+                                                    {cert.issuer && cert.year ? ' · ' : ''}
+                                                    {cert.year}
+                                                </div>
+                                            )}
                                         </div>
                                     ))}
                                 </div>
