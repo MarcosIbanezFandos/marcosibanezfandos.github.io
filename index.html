@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Portfolio | Marcos Ibáñez</title>
+    <title>Marcos Ibáñez | Telecommunications Engineer</title>
     
     <!-- Fonts: Inter for that clean, professional engineering look -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -112,7 +112,7 @@
                     {
                         dates: "2022",
                         title: "Data Software Development Intern",
-                        company: "ETRA R&D",
+                        company: "ETRA I+D",
                         link: "https://www.grupoetra.com",
                         description: "Analyzed complex datasets using SQL and Python to drive strategic decisions. Built automated ETL pipelines and visualized key performance indicators using Power BI and Alteryx.",
                         skills: ["SQL", "C#", "Power BI", "Alteryx"]
@@ -245,7 +245,7 @@
                         dates: "2023",
                         title: "Técnico en Instalaciones de Redes",
                         company: "Pamesa Cerámica",
-                        link: "https://www.pamesa.com/",
+                        link: "https://www.pamesa.com/index.html",
                         description: "Gestión de infraestructura de redes industriales. Supervisión de instalaciones de fibra óptica y mantenimiento de salas de datos para sistemas de fabricación de alta disponibilidad.",
                         skills: ["Redes Industriales", "Ciberseguridad", "Cisco", "Fibra Óptica"]
                     }
@@ -362,6 +362,12 @@
             const Wrapper = href ? 'a' : 'div';
             const props = href ? { href, target: "_blank", rel: "noreferrer" } : { onClick };
 
+            // Styles extracted to variable to avoid double curly braces issues
+            const glowStyle = {
+                opacity,
+                background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, rgba(45, 212, 191, 0.4), transparent 40%)`
+            };
+
             return (
                 <Wrapper 
                     onMouseMove={handleMouseMove}
@@ -372,10 +378,7 @@
                      {/* Gradient Layer (The Border Glow) */}
                     <div 
                         className="pointer-events-none absolute inset-0 rounded-xl transition-opacity duration-500"
-                        style={{
-                            opacity,
-                            background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, rgba(45, 212, 191, 0.4), transparent 40%)`
-                        }}
+                        style={glowStyle}
                     />
                     
                     {/* Content Layer (Masks the gradient to create border) */}
@@ -462,15 +465,18 @@
                 { id: 'volunteering', label: content.nav.volunteering },
             ];
 
+            // Styles extracted to variable to avoid double curly braces issues
+            const spotlightStyle = {
+                background: `radial-gradient(600px at ${mousePosition.x}px ${mousePosition.y}px, ${theme === 'dark' ? 'rgba(29, 78, 216, 0.15)' : 'rgba(14, 165, 233, 0.15)'}, transparent 80%)`
+            };
+
             return (
                 <div className="min-h-screen max-w-screen-xl mx-auto px-6 py-12 font-sans md:px-12 md:py-20 lg:px-24 lg:py-0 relative">
                     
                     {/* SPOTLIGHT EFFECT LAYER */}
                     <div 
                         className="pointer-events-none fixed inset-0 z-30 transition duration-300 lg:absolute"
-                        style={{
-                            background: `radial-gradient(600px at ${mousePosition.x}px ${mousePosition.y}px, ${theme === 'dark' ? 'rgba(29, 78, 216, 0.15)' : 'rgba(14, 165, 233, 0.15)'}, transparent 80%)`
-                        }}
+                        style={spotlightStyle}
                     ></div>
 
                     {/* Fixed Controls Container */}
@@ -747,7 +753,7 @@
                             {/* FOOTER */}
                             <footer className="max-w-md pb-16 text-sm text-slate-500 sm:pb-0">
                                 <p>
-                                   Marcos Ibáñez
+                                   Marcos Ibáñez Fandos · marcosibanezfandos@gmail.com
                                 </p>
                             </footer>
 
