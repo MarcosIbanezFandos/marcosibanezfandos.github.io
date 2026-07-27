@@ -1,46 +1,43 @@
-# Personal Portfolio — Marcos Ibáñez
+# Personal Portfolio — Marcos Ibáñez Fandos
 
-Sitio web personal y currículum online de **Marcos Ibáñez Fandos**,
-Ingeniero de Telecomunicaciones. Página de una sola vista (*single-page*)
-con secciones de experiencia, proyectos, publicaciones, formación,
-certificaciones y voluntariado, con soporte multi-idioma y modo claro/oscuro.
+## About
 
-## 🌐 Acceso / Visualización
+Personal portfolio website and online résumé of **Marcos Ibáñez Fandos**, Telecommunications Engineer with a focus on Data Science, AI and Fintech. Single-page application with sections covering experience, projects, publications, education, certifications and volunteering — with multi-language support (English / Spanish) and light / dark mode.
 
-**En vivo:** https://marcosibanezfandos.github.io
+🌐 **Live:** [marcosibanezfandos.github.io](https://marcosibanezfandos.github.io)
 
-El sitio está **activo** y alojado gratuitamente en **GitHub Pages**.
-No requiere instalación: basta con abrir la URL en cualquier navegador.
+---
 
-## 🧱 Cómo está hecho
+## Tech Stack
 
-- **Un único `index.html`** que monta una interfaz tipo React con clases de
-  utilidad estilo TailwindCSS.
-- **`.nojekyll`** para que GitHub Pages sirva los ficheros tal cual, sin
-  procesarlos con Jekyll.
-- Documentos descargables incluidos en el repo:
-  - `CV_MarcosIbanez_2026.pdf` — currículum.
-  - `Memoria_Entrega_Final_MarcosIbanez.pdf` — memoria del proyecto final.
-  - `Hybrid_Neural Networks_Marcos Ibanez_2025.pdf` — publicación.
+- **Single `index.html`** — self-contained SPA, no build step required.
+- **Vanilla CSS + JS** — utility-first styling inspired by Tailwind, no framework dependency.
+- **`.nojekyll`** — so GitHub Pages serves files as-is, skipping Jekyll processing.
+- Downloadable documents bundled in the repo:
+  - `CV_MarcosIbanez_2026.pdf` — curriculum vitae.
+  - `Memoria_Entrega_Final_MarcosIbanez.pdf` — bachelor thesis report.
+  - `Hybrid_Neural Networks_Marcos Ibanez_2025.pdf` — academic publication.
 
-## 💻 Ejecución en local
+---
 
-Al ser un sitio estático no necesita compilación. Basta con servir la carpeta:
+## Running Locally
+
+Static site — no build step needed. Serve the folder with any HTTP server:
 
 ```bash
 git clone https://github.com/MarcosIbanezFandos/marcosibanezfandos.github.io.git
 cd marcosibanezfandos.github.io
-python3 -m http.server 8000     # http://localhost:8000
+python3 -m http.server 8000   # open http://localhost:8000
 ```
 
-También puedes abrir `index.html` directamente en el navegador.
-
-## 🚀 Despliegue
-
-Cualquier `push` a la rama por defecto se publica automáticamente en
-**GitHub Pages** en `https://marcosibanezfandos.github.io` (gratuito y sin
-mantenimiento de servidor).
+Or simply open `index.html` directly in your browser.
 
 ---
 
-Marcos Ibáñez Fandos — [@MarcosIbanezFandos](https://github.com/MarcosIbanezFandos)
+## Deployment
+
+Any push to the default branch is automatically published to **GitHub Pages** at `https://marcosibanezfandos.github.io` — zero server maintenance, zero cost.
+
+---
+
+Marcos Ibáñez Fandos · [@MarcosIbanezFandos](https://github.com/MarcosIbanezFandos)
