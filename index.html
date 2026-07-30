@@ -10,9 +10,16 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
+    <!-- Tailwind CSS — servido desde este repositorio, no desde el CDN.
+         No se puede usar SRI con cdn.tailwindcss.com: `integrity` exige
+         `crossorigin="anonymous"`, y ese CDN no devuelve cabeceras CORS, así
+         que el navegador bloquearía el script. Sirviéndolo nosotros
+         desaparece la dependencia de un tercero: nadie puede cambiar este
+         fichero sin pasar por un commit.
+         Nota: el Play CDN compila en el navegador y no está pensado para
+         producción; lo ideal a medio plazo es compilar el CSS. -->
+    <script src="vendor/tailwind-3.4.16.js"></script>
+
     <!-- Tailwind Config for Custom Colors -->
     <script>
         tailwind.config = {
@@ -39,14 +46,22 @@
     </script>
 
     <!-- React & ReactDOM -->
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    
-    <!-- Babel for JSX -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    
-    <!-- Lucide Icons (Lightweight SVG icons) -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script crossorigin="anonymous"
+            src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"
+            integrity="sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z"></script>
+    <script crossorigin="anonymous"
+            src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"
+            integrity="sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1"></script>
+
+    <!-- Babel for JSX (herramienta de desarrollo: compila en el navegador) -->
+    <script src="https://unpkg.com/@babel/standalone@8.0.4/babel.min.js"
+            integrity="sha384-bdF7m0Y1IFKt9Q6xC8X9qkXn0OBriQWKyWwZKYsN05zF6P/g9OakjjL0G2Sd4pB4"
+            crossorigin="anonymous"></script>
+
+    <!-- Lucide Icons. Nunca @latest: es "dame lo que haya, sin revisarlo". -->
+    <script src="https://unpkg.com/lucide@1.28.0/dist/umd/lucide.min.js"
+            integrity="sha384-VrnzGPiSyQxm3mI2VhlssyR85zugSHtxMkgO42qV3wUAbNk1oRdZkCWjXKOhuVu6"
+            crossorigin="anonymous"></script>
 
     <style>
         /* Custom scrollbar for Webkit */

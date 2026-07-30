@@ -30,17 +30,9 @@ código de terceros se carga y qué información personal se publica.
 
 ## 2. Scripts de terceros
 
-Hoy la página carga tres scripts externos sin verificación de integridad:
-
-```html
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-<script src="https://unpkg.com/lucide@latest"></script>
-```
-
-Cada uno de ellos ejecuta código arbitrario en tu dominio con confianza total. Si
-el CDN se ve comprometido, o si `lucide@latest` publica una versión maliciosa, el
-código entra en tu página sin que tú toques nada. `@latest` es especialmente
+Cada script externo ejecuta código arbitrario en tu dominio con confianza total.
+Si el CDN se ve comprometido, o si una dependencia publica una versión maliciosa,
+el código entra en tu página sin que tú toques nada. `@latest` es especialmente
 delicado: significa "dame lo que haya, sin revisarlo".
 
 Reglas:
@@ -48,13 +40,36 @@ Reglas:
 - **Fijar la versión exacta.** Nunca `@latest` ni rangos.
 - **Subresource Integrity (SRI)** en todo script externo:
   ```html
-  <script src="https://unpkg.com/lucide@0.544.0/dist/umd/lucide.min.js"
+  <script src="https://unpkg.com/lucide@1.28.0/dist/umd/lucide.min.js"
           integrity="sha384-..." crossorigin="anonymous"></script>
   ```
   Con SRI, si el fichero cambia un solo byte, el navegador lo bloquea.
-- Mejor aún: **descargar las librerías al repositorio** y servirlas desde el
-  propio dominio. Elimina la dependencia del CDN por completo y la página carga
-  más rápido.
+- Para calcular el hash:
+  ```bash
+  curl -sL <url> | openssl dgst -sha384 -binary | openssl base64 -A
+  ```
+
+### Cuidado: SRI necesita CORS
+
+`integrity` obliga a poner `crossorigin="anonymous"`, y eso convierte la carga en
+una petición CORS. **Si el CDN no devuelve `Access-Control-Allow-Origin`, el
+navegador bloquea el script y la página se rompe en silencio** — no salta ningún
+error obvio, simplemente los estilos o la librería no aparecen.
+
+Es exactamente lo que pasa con `cdn.tailwindcss.com`, que no envía cabeceras
+CORS. Por eso Tailwind se sirve desde `vendor/` en este repositorio en lugar de
+desde el CDN. unpkg sí las envía, así que ahí SRI funciona.
+
+Comprobar antes de añadir SRI a un origen nuevo:
+```bash
+curl -sI -H "Origin: https://marcosibanezfandos.github.io" <url> | grep -i access-control
+```
+
+- **Siempre que se pueda, descargar la librería al repositorio** y servirla desde
+  el propio dominio: elimina la dependencia del tercero (nadie puede cambiar ese
+  fichero sin pasar por un commit), evita el problema de CORS y carga más rápido.
+- Tras tocar cualquier script, **abrir la página y comprobar que sigue
+  funcionando**: un SRI mal calculado la deja rota sin avisar.
 - Tailwind por CDN y Babel en el navegador son herramientas de desarrollo. Para
   producción, compilar el CSS y el JSX y servir el resultado estático.
 - No añadir scripts de terceros (widgets, trackers, chats) sin evaluar qué
