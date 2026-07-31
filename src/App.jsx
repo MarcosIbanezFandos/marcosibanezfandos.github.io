@@ -408,10 +408,6 @@ export default function App() {
                         <footer className="pb-16 text-xs leading-relaxed text-slate-500">
                             <p>© {year} Marcos Ibáñez. {t.ui.builtWith}</p>
                             <p className="mt-1.5 text-[11px] text-slate-500/80">
-                                BMW M3 Competition photograph by Alexander Migl —{' '}
-                                <a className="underline decoration-dotted underline-offset-2 hover:text-slate-600 dark:hover:text-slate-300"
-                                   href="https://commons.wikimedia.org/wiki/File:BMW_M3_Competition_(G80)_Auto_Zuerich_2021_IMG_0043.jpg"
-                                   target="_blank" rel="noreferrer noopener">CC BY-SA 4.0</a>.
                                 Company and university marks are the property of their respective owners.
                             </p>
                         </footer>
