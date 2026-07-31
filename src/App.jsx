@@ -2,17 +2,18 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { motion, useScroll, useSpring } from 'framer-motion'
 import {
     Github, Linkedin, Mail, FileText, ArrowUpRight, MapPin, Sun, Moon, Languages,
-    GraduationCap, HeartHandshake, Sparkles,
+    GraduationCap, HeartHandshake, Sparkles, Lock,
 } from 'lucide-react'
 import { content, RESUME } from './content.js'
 import { Reveal, Section, GlowCard, Background, ScrollProgress, ScrambleText, Chip } from './components/UI.jsx'
-import { CompanyArt, ProjectViz, NeuralArt } from './components/Art.jsx'
+import { CompanyArt, ProjectViz, NeuralArt, UniversityMark, FLAGS } from './components/Art.jsx'
 
 const ICONS = { github: Github, linkedin: Linkedin, mail: Mail, 'file-text': FileText }
 const SECTIONS = ['about', 'experience', 'projects', 'publications', 'education', 'certifications', 'volunteering']
 
 export default function App() {
-    const [lang, setLang] = useState(() => (navigator.language || '').toLowerCase().startsWith('es') ? 'es' : 'en')
+    // English by default; the visitor can switch to Spanish at any time.
+    const [lang, setLang] = useState(() => localStorage.getItem('lang') || 'en')
     const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark')
     const [active, setActive] = useState('about')
     const t = content[lang]
@@ -25,7 +26,7 @@ export default function App() {
         localStorage.setItem('theme', theme)
     }, [theme])
 
-    useEffect(() => { document.documentElement.lang = lang }, [lang])
+    useEffect(() => { document.documentElement.lang = lang; localStorage.setItem('lang', lang) }, [lang])
 
     // Highlight the nav entry for whichever section is in view.
     useEffect(() => {
@@ -206,25 +207,31 @@ export default function App() {
                                 {t.projects.map((p, i) => (
                                     <Reveal key={p.title} delay={i * 0.05}>
                                         <li>
-                                            <GlowCard href={p.live || p.link}>
+                                            <GlowCard href={p.private ? undefined : (p.live || p.link)}>
                                                 <div className="flex flex-col gap-4 sm:flex-row-reverse sm:items-start sm:justify-end">
                                                     <ProjectViz theme={p.theme} />
                                                     <div className="flex-1">
                                                         <h3 className="font-bold leading-snug text-slate-900 dark:text-slate-100">
-                                                            <span className="inline-flex items-baseline gap-1">
+                                                            <span className="inline-flex items-baseline gap-1.5">
                                                                 {p.title}
-                                                                <ArrowUpRight size={16} className="shrink-0 translate-y-px transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                                                                {p.private
+                                                                    ? <Lock size={14} className="shrink-0 translate-y-px text-slate-400" aria-label={t.ui.privateRepo} />
+                                                                    : <ArrowUpRight size={16} className="shrink-0 translate-y-px transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />}
                                                             </span>
                                                         </h3>
                                                         <p className="mt-2 text-sm leading-relaxed">{p.description}</p>
                                                         <ul className="mt-3 flex flex-wrap gap-1.5">
                                                             {p.tech.map(s => <Chip key={s}>{s}</Chip>)}
                                                         </ul>
-                                                        {p.live && (
+                                                        {p.private ? (
+                                                            <span className="mt-3 inline-flex items-center gap-1.5 text-[11px] font-black uppercase tracking-widest text-slate-400">
+                                                                <Lock size={11} /> {t.ui.privateRepo}
+                                                            </span>
+                                                        ) : p.live ? (
                                                             <span className="mt-3 inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
                                                                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" /> live
                                                             </span>
-                                                        )}
+                                                        ) : null}
                                                     </div>
                                                 </div>
                                             </GlowCard>
@@ -242,7 +249,7 @@ export default function App() {
                                         <li>
                                             <GlowCard href={pub.link}>
                                                 <div className="flex flex-col gap-4 sm:flex-row-reverse sm:items-start sm:justify-end">
-                                                    {pub.theme === 'neural' ? <NeuralArt /> : <ProjectViz theme="fraud" />}
+                                                    {pub.theme === 'neural' ? <NeuralArt /> : <ProjectViz theme={pub.theme} />}
                                                     <div className="flex-1">
                                                         <div className="text-[11px] font-black uppercase tracking-widest text-slate-500">{pub.year} · {pub.publisher}</div>
                                                         <h3 className="mt-1 font-bold leading-snug text-slate-900 dark:text-slate-100">
@@ -263,19 +270,12 @@ export default function App() {
 
                         {/* Education */}
                         <Section id="education" title={t.nav.education}>
-                            <ol className="relative space-y-2 border-l border-slate-300 pl-6 dark:border-slate-700">
+                            <ol className="space-y-4">
                                 {t.education.map((e, i) => (
                                     <Reveal key={e.school} delay={i * 0.06}>
-                                        <li className="relative">
-                                            <motion.span
-                                                className="absolute -left-[1.72rem] top-2 grid h-6 w-6 place-items-center rounded-full bg-slate-100 ring-4 ring-slate-50 dark:bg-slate-800 dark:ring-slate-950"
-                                                initial={{ scale: 0 }} whileInView={{ scale: 1 }}
-                                                viewport={{ once: true, margin: '-60px' }}
-                                                transition={{ type: 'spring', stiffness: 220, damping: 16, delay: 0.1 * i }}
-                                            >
-                                                <GraduationCap size={13} className="text-sky-600 dark:text-sky-400" />
-                                            </motion.span>
-                                            <div className="pb-4">
+                                        <li className="flex items-start gap-4">
+                                            <UniversityMark id={e.logo} />
+                                            <div className="pb-1">
                                                 <h3 className="font-bold text-slate-900 dark:text-slate-100">{e.degree}</h3>
                                                 <div className="text-sm font-semibold text-slate-600 dark:text-slate-300">{e.school}</div>
                                                 <div className="mt-0.5 flex items-center gap-1.5 text-xs text-slate-500">
@@ -290,24 +290,30 @@ export default function App() {
 
                         {/* Languages */}
                         <Section id="certifications" title={t.nav.certifications}>
-                            <ul className="space-y-3">
+                            {/* Each row is the language bar itself: the flag sits behind the
+                                text, vivid across the level reached and muted beyond it. */}
+                            <ul className="space-y-2.5">
                                 {t.certifications.map((c, i) => (
                                     <Reveal key={c.title} delay={i * 0.04}>
-                                        <li className="flex items-center gap-4">
-                                            <span className="text-xl" aria-hidden="true">{c.flag}</span>
-                                            <div className="min-w-0 flex-1">
-                                                <div className="flex flex-wrap items-baseline justify-between gap-x-3">
-                                                    <span className="text-sm font-bold text-slate-900 dark:text-slate-100">{c.title}</span>
-                                                    {c.issuer && <span className="text-[11px] font-semibold text-slate-500">{c.issuer} {c.year}</span>}
-                                                </div>
-                                                <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
-                                                    <motion.div
-                                                        className="h-full rounded-full bg-gradient-to-r from-sky-400 to-indigo-500"
-                                                        initial={{ width: 0 }} whileInView={{ width: `${c.level}%` }}
-                                                        viewport={{ once: true, margin: '-60px' }}
-                                                        transition={{ duration: 0.9, delay: 0.06 * i, ease: [0.22, 1, 0.36, 1] }}
-                                                    />
-                                                </div>
+                                        <li className="relative overflow-hidden rounded-xl border border-slate-200/80 bg-white/50 dark:border-slate-700/60 dark:bg-slate-800/30">
+                                            {/* muted flag across the whole row */}
+                                            <div className="absolute inset-0 opacity-[0.14] dark:opacity-[0.18]"
+                                                style={{ backgroundImage: FLAGS[c.code] }} aria-hidden="true" />
+                                            {/* vivid flag up to the proficiency level */}
+                                            <motion.div
+                                                className="absolute inset-y-0 left-0 opacity-40 dark:opacity-35"
+                                                style={{ backgroundImage: FLAGS[c.code], backgroundSize: `${(100 / c.level) * 100}% 100%` }}
+                                                initial={{ width: 0 }} whileInView={{ width: `${c.level}%` }}
+                                                viewport={{ once: true, margin: '-60px' }}
+                                                transition={{ duration: 1, delay: 0.06 * i, ease: [0.22, 1, 0.36, 1] }}
+                                                aria-hidden="true"
+                                            />
+                                            {/* scrim keeps the text crisp over any flag */}
+                                            <div className="absolute inset-0 bg-gradient-to-r from-white/85 via-white/70 to-white/85 dark:from-slate-900/85 dark:via-slate-900/70 dark:to-slate-900/85" aria-hidden="true" />
+
+                                            <div className="relative flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1 px-4 py-3">
+                                                <span className="text-sm font-bold text-slate-900 dark:text-slate-100">{c.title}</span>
+                                                {c.issuer && <span className="text-[11px] font-semibold text-slate-600 dark:text-slate-400">{c.issuer} {c.year}</span>}
                                             </div>
                                         </li>
                                     </Reveal>

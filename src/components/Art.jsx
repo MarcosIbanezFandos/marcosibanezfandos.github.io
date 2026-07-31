@@ -150,7 +150,8 @@ export const CompanyArt = ({ theme, hovered }) => {
 /* ── Project thumbnails ─────────────────────────────────────────────────────
    Each project gets a live miniature of what it actually does.              */
 
-// Fandance: the app's real semicircle allocation gauge.
+// Fandance: the app's allocation gauge — segments draw in, then a needle
+// settles on the target weight, mirroring what the rebalancer actually does.
 const FandanceViz = () => {
     const arcs = [
         { color: '#10b981', from: 0, to: 0.36 },
@@ -175,6 +176,82 @@ const FandanceViz = () => {
                     viewport={{ once: true, margin: '-60px' }}
                     transition={{ duration: 0.7, delay: 0.12 * i, ease: 'easeOut' }}
                 />
+            ))}
+            {/* needle settling on target */}
+            <motion.line
+                x1="50" y1="44" x2="50" y2="16" strokeWidth="2.5" strokeLinecap="round"
+                className="stroke-slate-700 dark:stroke-slate-200"
+                style={{ originX: '50px', originY: '44px' }}
+                initial={{ rotate: -78, opacity: 0 }}
+                whileInView={{ rotate: 26, opacity: 1 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ type: 'spring', stiffness: 45, damping: 11, delay: 0.5 }}
+            />
+            <circle cx="50" cy="44" r="3.5" className="fill-slate-700 dark:fill-slate-200" />
+        </svg>
+    )
+}
+
+// Bachelor thesis: an ROC curve drawing itself above the diagonal — a
+// deliberately different visual language from the fraud project's matrix.
+const ThesisViz = () => (
+    <svg viewBox="0 0 100 60" className="h-full w-full">
+        <line x1="10" y1="52" x2="92" y2="52" className="stroke-slate-300 dark:stroke-slate-700" strokeWidth="1.5" />
+        <line x1="10" y1="52" x2="10" y2="6" className="stroke-slate-300 dark:stroke-slate-700" strokeWidth="1.5" />
+        <line x1="10" y1="52" x2="88" y2="8" className="stroke-slate-300 dark:stroke-slate-700" strokeWidth="1" strokeDasharray="3 3" />
+        <motion.path
+            d="M10 52 C 22 20, 44 10, 88 8" fill="none" stroke="#0ea5e9" strokeWidth="3" strokeLinecap="round"
+            initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 1.2, ease: 'easeOut' }}
+        />
+        <motion.circle
+            r="3.5" className="fill-sky-500"
+            initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ delay: 1.1 }}
+            cx="34" cy="20"
+        />
+    </svg>
+)
+
+// Game of the Goose: a spiral board where tokens hop forward, plus a die.
+const OcaViz = () => {
+    const squares = [
+        [14, 46], [24, 42], [34, 38], [44, 36], [54, 36], [64, 38], [72, 44],
+    ]
+    return (
+        <svg viewBox="0 0 90 60" className="h-full w-full">
+            <path d="M14 46 C 30 30, 60 26, 72 44" fill="none"
+                className="stroke-slate-300 dark:stroke-slate-700" strokeWidth="1.5" strokeDasharray="2 3" />
+            {squares.map(([cx, cy], i) => (
+                <motion.rect
+                    key={i} x={cx - 4} y={cy - 4} width="8" height="8" rx="2"
+                    className={i % 3 === 0 ? 'fill-emerald-500' : 'fill-slate-300 dark:fill-slate-600'}
+                    initial={{ opacity: 0, y: -6 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '-60px' }}
+                    transition={{ duration: 0.35, delay: 0.06 * i, ease: 'backOut' }}
+                />
+            ))}
+            {/* token hopping along the board */}
+            <motion.circle
+                r="4" className="fill-rose-500"
+                initial={{ opacity: 0 }}
+                whileInView={{
+                    opacity: 1,
+                    cx: squares.map(s => s[0]),
+                    cy: squares.map(s => s[1] - 9),
+                }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 2.4, delay: 0.5, times: squares.map((_, i) => i / (squares.length - 1)), ease: 'easeInOut' }}
+            />
+            {/* die */}
+            <rect x="66" y="8" width="16" height="16" rx="4" className="fill-white stroke-slate-300 dark:fill-slate-700 dark:stroke-slate-600" strokeWidth="1.5" />
+            {[[71, 13], [77, 13], [71, 19], [77, 19]].map(([cx, cy], i) => (
+                <motion.circle key={i} cx={cx} cy={cy} r="1.6" className="fill-slate-600 dark:fill-slate-200"
+                    animate={{ opacity: [0.35, 1, 0.35] }}
+                    transition={{ duration: 1.6, repeat: Infinity, delay: i * 0.18 }} />
             ))}
         </svg>
     )
@@ -220,6 +297,8 @@ export const ProjectViz = ({ theme }) => {
     const inner =
         theme === 'fandance' ? <FandanceViz /> :
         theme === 'fraud' ? <FraudViz /> :
+        theme === 'thesis' ? <ThesisViz /> :
+        theme === 'oca' ? <OcaViz /> :
         theme === 'rebalancer' ? <RebalancerViz /> : null
     if (!inner) return null
     return (
@@ -258,4 +337,63 @@ export const NeuralArt = () => {
             )}
         </svg>
     )
+}
+
+/* ── University marks ───────────────────────────────────────────────────────
+   Hand-drawn monograms in each institution's colour, not their trademarked
+   logo files. A ring traces around the mark as it scrolls into view and the
+   badge lifts on hover.                                                     */
+const UNIS = {
+    upv: { label: 'UPV', from: '#C1002A', to: '#8E0020' },
+    tum: { label: 'TUM', from: '#3070B3', to: '#0A4F91' },
+    ie: { label: 'IE', from: '#1D3A8A', to: '#0B1F5B' },
+}
+
+export const UniversityMark = ({ id }) => {
+    const uni = UNIS[id]
+    if (!uni) return null
+    return (
+        <motion.div
+            className="relative grid h-11 w-11 shrink-0 place-items-center rounded-xl text-white shadow-sm"
+            style={{ backgroundImage: `linear-gradient(140deg, ${uni.from}, ${uni.to})` }}
+            initial={{ opacity: 0, scale: 0.6, rotate: -8 }}
+            whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            whileHover={{ y: -3, rotate: 2, scale: 1.05 }}
+            transition={{ type: 'spring', stiffness: 260, damping: 18 }}
+        >
+            <span className="text-[11px] font-black tracking-tight">{uni.label}</span>
+            {/* ring traces around the badge */}
+            <svg viewBox="0 0 44 44" className="pointer-events-none absolute inset-0 h-full w-full">
+                <motion.rect
+                    x="1.5" y="1.5" width="41" height="41" rx="11" fill="none"
+                    stroke="currentColor" strokeWidth="1.5" className="text-white/60"
+                    pathLength={1} initial={{ pathLength: 0 }}
+                    whileInView={{ pathLength: 1 }}
+                    viewport={{ once: true, margin: '-60px' }}
+                    transition={{ duration: 1, ease: 'easeInOut', delay: 0.15 }}
+                />
+            </svg>
+        </motion.div>
+    )
+}
+
+/* ── Flag bars for the Languages section ────────────────────────────────────
+   The flag is painted behind the row: vivid across the proficiency portion,
+   muted across the rest, with a scrim so the text stays perfectly legible. */
+export const FLAGS = {
+    es: 'linear-gradient(180deg,#AA151B 0 25%,#F1BF00 25% 75%,#AA151B 75% 100%)',
+    gb: [
+        'linear-gradient(90deg,transparent 45%,#C8102E 45% 55%,transparent 55%)',
+        'linear-gradient(180deg,transparent 42%,#C8102E 42% 58%,transparent 58%)',
+        'linear-gradient(90deg,transparent 40%,#fff 40% 60%,transparent 60%)',
+        'linear-gradient(180deg,transparent 36%,#fff 36% 64%,transparent 64%)',
+        'linear-gradient(#012169,#012169)',
+    ].join(','),
+    fr: 'linear-gradient(90deg,#0055A4 0 33.3%,#FFFFFF 33.3% 66.6%,#EF4135 66.6% 100%)',
+    de: 'linear-gradient(180deg,#000 0 33.3%,#DD0000 33.3% 66.6%,#FFCE00 66.6% 100%)',
+    va: [
+        'linear-gradient(90deg,#0055A4 0 13%,transparent 13%)',
+        'linear-gradient(180deg,#F1BF00 0 12.5%,#DA121A 12.5% 25%,#F1BF00 25% 37.5%,#DA121A 37.5% 50%,#F1BF00 50% 62.5%,#DA121A 62.5% 75%,#F1BF00 75% 87.5%,#DA121A 87.5% 100%)',
+    ].join(','),
 }

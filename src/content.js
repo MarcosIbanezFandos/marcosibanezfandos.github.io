@@ -27,6 +27,7 @@ export const content = {
             status: 'Currently',
             statusValue: 'Transaction Pricing @ BMW Group · Munich',
             viewResume: 'View full résumé',
+            privateRepo: 'Private repository',
             toolbox: 'Toolbox',
             present: 'Present',
             scroll: 'Scroll',
@@ -81,12 +82,12 @@ export const content = {
         projects: [
             {
                 theme: 'fandance',
-                title: 'Fandance — index-fund rebalancer (PWA)',
+                title: 'Fandance — Index Portfolio Rebalancer (PWA)',
                 description:
-                    'A progressive web app that tells me exactly how much to put into each fund every month to stay on plan, following the passive rebalancing method used by robo-advisors. It X-rays ETFs to show which companies, countries and currencies I really own, compares my portfolio against the major indices, and computes IRR from my real purchase history.',
+                    'A full-stack progressive web app that automates passive portfolio management. It computes the exact monthly contribution to allocate across each fund to converge on a target asset allocation, applying the cash-flow rebalancing methodology used by robo-advisors. Includes an ETF look-through engine that resolves underlying holdings into real exposure by company, country and currency, benchmarking against major indices, and money-weighted return (IRR) derived from imported transaction history.',
                 link: 'https://github.com/MarcosIbanezFandos/Fandance-PWA',
                 live: 'https://fandance-pwa.vercel.app',
-                tech: ['React', 'FastAPI', 'Supabase', 'Vercel', 'yfinance'],
+                tech: ['React', 'FastAPI', 'Supabase', 'Vercel', 'yfinance', 'PWA'],
             },
             {
                 theme: 'fraud',
@@ -97,17 +98,17 @@ export const content = {
                 tech: ['Python', 'scikit-learn', 'Streamlit', 'ML'],
             },
             {
-                theme: 'rebalancer',
-                title: 'Portfolio Rebalancer',
+                theme: 'oca',
+                title: 'Game of the Goose — Multiplayer Web Edition',
                 description:
-                    'A Python tool for rebalancing investment portfolios. Loads holdings, computes exact buy/sell orders from target weights and simulates post-trade composition. Designed for robo-advisory workflows.',
-                link: 'https://github.com/MarcosIbanezFandos/Portfolio-Rebalancer',
-                tech: ['Python', 'Pandas', 'Finance', 'Quantitative Analysis'],
+                    'University group project: a browser-based multiplayer implementation of the classic Spanish board game. Server-side game logic and turn validation run on Java Servlets, with match state persisted in AWS RDS so several players share a synchronised board. Containerised with Docker and deployed to Railway.',
+                link: 'https://github.com/MarcosIbanezFandos/ProyectoOca',
+                tech: ['Java Servlets', 'JavaScript', 'AWS RDS', 'Docker', 'Tomcat'],
             },
         ],
         publications: [
             {
-                theme: 'fraud',
+                theme: 'thesis',
                 title: 'Bachelor Thesis — Fraud Detection in Fintech Transactions using Artificial Intelligence',
                 publisher: 'Universitat Politècnica de València',
                 year: '2025',
@@ -127,24 +128,33 @@ export const content = {
         ],
         education: [
             {
-                school: 'Universitat Politècnica de València',
-                degree: 'B.Sc. Telecommunications Engineering',
-                details: 'Focus on Telematic Systems',
-                city: 'Valencia',
+                logo: 'ie',
+                school: 'IE University',
+                degree: 'M.Sc. Business Analytics and Data Science',
+                details: 'IE School of Science and Technology',
+                city: 'Madrid',
             },
             {
+                logo: 'tum',
                 school: 'Technical University of Munich',
                 degree: 'Erasmus+ Exchange',
                 details: 'School of Computation, Information and Technology',
                 city: 'Munich',
             },
+            {
+                logo: 'upv',
+                school: 'Universitat Politècnica de València',
+                degree: 'B.Sc. Telecommunications Engineering',
+                details: 'Focus on Telematic Systems',
+                city: 'Valencia',
+            },
         ],
         certifications: [
-            { flag: '🇪🇸', title: 'Spanish — Native', issuer: '', year: '', level: 100 },
-            { flag: '🇬🇧', title: 'English — C1 Advanced', issuer: 'Cambridge English', year: '2017', level: 85 },
-            { flag: '🇫🇷', title: 'French — DELF B2', issuer: 'Institut français', year: '2019', level: 65 },
-            { flag: '🇩🇪', title: 'German — Goethe B1', issuer: 'Goethe-Institut e.V.', year: '2018', level: 45 },
-            { flag: '🏛️', title: 'Valencian — C1 (Grau Mitjà)', issuer: 'Junta Qualificadora de Coneixements de Valencià', year: '2024', level: 90 },
+            { code: 'es', title: 'Spanish — Native', issuer: '', year: '', level: 100 },
+            { code: 'gb', title: 'English — C1 Advanced', issuer: 'Cambridge English', year: '2017', level: 85 },
+            { code: 'fr', title: 'French — DELF B2', issuer: 'Institut français', year: '2019', level: 65 },
+            { code: 'de', title: 'German — Goethe B1', issuer: 'Goethe-Institut e.V.', year: '2018', level: 45 },
+            { code: 'va', title: 'Valencian — C1 (Grau Mitjà)', issuer: 'Junta Qualificadora de Coneixements de Valencià', year: '2024', level: 90 },
         ],
         volunteering: [
             {
@@ -171,6 +181,7 @@ export const content = {
             status: 'Actualmente',
             statusValue: 'Transaction Pricing @ BMW Group · Múnich',
             viewResume: 'Ver CV completo',
+            privateRepo: 'Repositorio privado',
             toolbox: 'Herramientas',
             present: 'Actualidad',
             scroll: 'Desliza',
@@ -225,12 +236,12 @@ export const content = {
         projects: [
             {
                 theme: 'fandance',
-                title: 'Fandance — rebalanceador de fondos indexados (PWA)',
+                title: 'Fandance — Rebalanceador de Carteras Indexadas (PWA)',
                 description:
-                    'Una app web progresiva que me dice exactamente cuánto meter en cada fondo cada mes para no desviarme del plan, siguiendo el método de rebalanceo pasivo que usan los robo-advisors. Radiografía los ETFs para ver qué empresas, países y divisas tengo de verdad, compara mi cartera con los grandes índices y calcula la TIR desde mi historial real de compras.',
+                    'Aplicación web progresiva full-stack que automatiza la gestión pasiva de carteras. Calcula la aportación mensual exacta a asignar a cada fondo para converger hacia una asignación objetivo, aplicando la metodología de rebalanceo por flujos de caja que emplean los robo-advisors. Incorpora un motor de look-through de ETFs que descompone las posiciones subyacentes en exposición real por empresa, país y divisa, comparación con los principales índices y cálculo de la rentabilidad ponderada por dinero (TIR) a partir del historial de transacciones importado.',
                 link: 'https://github.com/MarcosIbanezFandos/Fandance-PWA',
                 live: 'https://fandance-pwa.vercel.app',
-                tech: ['React', 'FastAPI', 'Supabase', 'Vercel', 'yfinance'],
+                tech: ['React', 'FastAPI', 'Supabase', 'Vercel', 'yfinance', 'PWA'],
             },
             {
                 theme: 'fraud',
@@ -241,17 +252,17 @@ export const content = {
                 tech: ['Python', 'scikit-learn', 'Streamlit', 'ML'],
             },
             {
-                theme: 'rebalancer',
-                title: 'Rebalanceador de Carteras',
+                theme: 'oca',
+                title: 'Juego de la Oca — Edición Web Multijugador',
                 description:
-                    'Herramienta en Python para rebalancear carteras. Carga las posiciones, calcula las órdenes exactas de compra/venta según los pesos objetivo y simula la composición resultante. Pensada para flujos de robo-advisory.',
-                link: 'https://github.com/MarcosIbanezFandos/Portfolio-Rebalancer',
-                tech: ['Python', 'Pandas', 'Finanzas', 'Análisis Cuantitativo'],
+                    'Proyecto universitario en grupo: implementación multijugador del clásico juego de mesa en navegador. La lógica de partida y la validación de turnos se ejecutan en el servidor con Java Servlets, y el estado se persiste en AWS RDS para que varios jugadores compartan un tablero sincronizado. Contenerizado con Docker y desplegado en Railway.',
+                link: 'https://github.com/MarcosIbanezFandos/ProyectoOca',
+                tech: ['Java Servlets', 'JavaScript', 'AWS RDS', 'Docker', 'Tomcat'],
             },
         ],
         publications: [
             {
-                theme: 'fraud',
+                theme: 'thesis',
                 title: 'TFG — Detección de Fraude en Transacciones Fintech usando IA',
                 publisher: 'Universitat Politècnica de València',
                 year: '2025',
@@ -271,24 +282,33 @@ export const content = {
         ],
         education: [
             {
-                school: 'Universitat Politècnica de València',
-                degree: 'Grado en Ingeniería de Telecomunicaciones',
-                details: 'Mención en Sistemas Telemáticos',
-                city: 'Valencia',
+                logo: 'ie',
+                school: 'IE University',
+                degree: 'Máster en Business Analytics y Data Science',
+                details: 'IE School of Science and Technology',
+                city: 'Madrid',
             },
             {
+                logo: 'tum',
                 school: 'Technical University of Munich',
                 degree: 'Intercambio Erasmus+',
                 details: 'Escuela de Computación, Información y Tecnología',
                 city: 'Múnich',
             },
+            {
+                logo: 'upv',
+                school: 'Universitat Politècnica de València',
+                degree: 'Grado en Ingeniería de Telecomunicaciones',
+                details: 'Mención en Sistemas Telemáticos',
+                city: 'Valencia',
+            },
         ],
         certifications: [
-            { flag: '🇪🇸', title: 'Español — Nativo', issuer: '', year: '', level: 100 },
-            { flag: '🇬🇧', title: 'Inglés — C1 Advanced', issuer: 'Cambridge English', year: '2017', level: 85 },
-            { flag: '🇫🇷', title: 'Francés — DELF B2', issuer: 'Institut français', year: '2019', level: 65 },
-            { flag: '🇩🇪', title: 'Alemán — Goethe B1', issuer: 'Goethe-Institut e.V.', year: '2018', level: 45 },
-            { flag: '🏛️', title: 'Valenciano — C1 (Grau Mitjà)', issuer: 'Junta Qualificadora de Coneixements de Valencià', year: '2024', level: 90 },
+            { code: 'es', title: 'Español — Nativo', issuer: '', year: '', level: 100 },
+            { code: 'gb', title: 'Inglés — C1 Advanced', issuer: 'Cambridge English', year: '2017', level: 85 },
+            { code: 'fr', title: 'Francés — DELF B2', issuer: 'Institut français', year: '2019', level: 65 },
+            { code: 'de', title: 'Alemán — Goethe B1', issuer: 'Goethe-Institut e.V.', year: '2018', level: 45 },
+            { code: 'va', title: 'Valenciano — C1 (Grau Mitjà)', issuer: 'Junta Qualificadora de Coneixements de Valencià', year: '2024', level: 90 },
         ],
         volunteering: [
             {
