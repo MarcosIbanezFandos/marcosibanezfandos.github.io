@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html { scroll-behavior: smooth; }
+body { -webkit-font-smoothing: antialiased; }
+
+/* Selection + scrollbar polish */
+::selection { background: rgb(56 189 248 / 0.25); }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Slow drift used by the aurora blobs */
+@keyframes drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  33%      { transform: translate3d(4%, -6%, 0) scale(1.08); }
+  66%      { transform: translate3d(-5%, 4%, 0) scale(0.95); }
+}
+.animate-drift { animation: drift 26s ease-in-out infinite; }
+
+/* Dashed line that "flows" — used by the ETRA data pipeline */
+@keyframes dash-flow { to { stroke-dashoffset: -1000; } }
+.animate-dash-flow { animation: dash-flow 12s linear infinite; }
+
+/* Everything calms down for users who ask for less motion. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .animate-drift, .animate-dash-flow { animation: none !important; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

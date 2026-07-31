@@ -1,43 +1,52 @@
-# Personal Portfolio — Marcos Ibáñez Fandos
+# marcosibanezfandos.github.io
 
-## About
+Personal site of **Marcos Ibáñez** — Telecommunications Engineer working where
+technology meets business: transaction pricing, data and applied AI.
 
-Personal portfolio website and online résumé of **Marcos Ibáñez Fandos**, Telecommunications Engineer with a focus on Data Science, AI and Fintech. Single-page application with sections covering experience, projects, publications, education, certifications and volunteering — with multi-language support (English / Spanish) and light / dark mode.
+**Live:** https://marcosibanezfandos.github.io
 
-🌐 **Live:** [marcosibanezfandos.github.io](https://marcosibanezfandos.github.io)
+## What it is
 
----
+A bilingual (EN/ES), light/dark portfolio built as a single-page React app. Each
+section carries its own motion design, and every employer gets bespoke artwork
+drawn in SVG — BMW's M stripes with a sweeping tachometer, a ceramic tile mosaic
+for Pamesa, an animated ETL pipeline for ETRA — plus live miniatures of what each
+project actually does.
 
-## Tech Stack
+Motion is deliberate, not decorative: everything animates only while on screen,
+nothing shifts layout, and the whole thing collapses to a static page for anyone
+browsing with `prefers-reduced-motion`.
 
-- **Single `index.html`** — self-contained SPA, no build step required.
-- **Vanilla CSS + JS** — utility-first styling inspired by Tailwind, no framework dependency.
-- **`.nojekyll`** — so GitHub Pages serves files as-is, skipping Jekyll processing.
-- Downloadable documents bundled in the repo:
-  - `CV_MarcosIbanez_2026.pdf` — curriculum vitae.
-  - `Memoria_Entrega_Final_MarcosIbanez.pdf` — bachelor thesis report.
-  - `Hybrid_Neural Networks_Marcos Ibanez_2025.pdf` — academic publication.
+## Stack
 
----
+React 18 · Vite · Tailwind CSS · Framer Motion · lucide-react
 
-## Running Locally
-
-Static site — no build step needed. Serve the folder with any HTTP server:
+## Local development
 
 ```bash
-git clone https://github.com/MarcosIbanezFandos/marcosibanezfandos.github.io.git
-cd marcosibanezfandos.github.io
-python3 -m http.server 8000   # open http://localhost:8000
+npm install
+npm run dev      # http://localhost:5173
+npm run build    # production build into dist/
+npm run preview  # serve the built site
 ```
-
-Or simply open `index.html` directly in your browser.
-
----
 
 ## Deployment
 
-Any push to the default branch is automatically published to **GitHub Pages** at `https://marcosibanezfandos.github.io` — zero server maintenance, zero cost.
+Pushing to `main` triggers `.github/workflows/deploy.yml`, which builds the site
+and publishes `dist/` to GitHub Pages. The repository's Pages source must be set
+to **GitHub Actions**.
 
----
+Static documents (résumé and papers) live in `public/` and keep their original
+URLs, so existing links stay valid.
 
-Marcos Ibáñez Fandos · [@MarcosIbanezFandos](https://github.com/MarcosIbanezFandos)
+## Structure
+
+```
+index.html              # app shell
+src/
+  App.jsx               # layout, sections, navigation
+  content.js            # all copy, EN + ES (single source of truth)
+  components/UI.jsx     # reveals, cards, background, scroll progress
+  components/Art.jsx    # per-company and per-project SVG animations
+public/                 # résumé + publications (PDF)
+```
