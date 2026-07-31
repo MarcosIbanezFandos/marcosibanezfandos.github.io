@@ -1,6 +1,5 @@
 import React from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
-import { CarSvg } from './CarSvg.jsx'
 
 /**
  * Bespoke, per-employer / per-project artwork.
@@ -41,7 +40,7 @@ const Mark = ({ src, label, className = '', size = 'md' }) => (
    drives across the card on hover.                                          */
 export const BmwArt = ({ hovered }) => {
     const reduce = useReducedMotion()
-    const driving = hovered && !reduce
+    const spin = hovered && !reduce
     return (
         <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl">
             {/* M stripes */}
@@ -65,22 +64,13 @@ export const BmwArt = ({ hovered }) => {
                 transition={{ type: 'spring', stiffness: 200, damping: 16, delay: 0.15 }}
             >
                 <motion.div
-                    animate={driving ? { rotate: 360 } : { rotate: 0 }}
-                    transition={driving ? { duration: 1.6, ease: 'linear', repeat: Infinity } : { duration: 0.4 }}
+                    animate={spin ? { rotate: 360 } : { rotate: 0 }}
+                    transition={spin ? { duration: 1.6, ease: 'linear', repeat: Infinity } : { duration: 0.4 }}
                 >
                     <Mark src="/logos/bmw.svg" label="BMW" />
                 </motion.div>
             </motion.div>
 
-            {/* Vector sedan: wheels spin while it drives across on hover */}
-            <motion.div
-                className="absolute bottom-1 left-0 w-40 text-slate-700 dark:text-slate-200 sm:w-48"
-                initial={{ x: '-130%', opacity: 0 }}
-                animate={driving ? { x: ['-130%', '330%'], opacity: [0, 1, 1, 0] } : { x: '-130%', opacity: 0 }}
-                transition={{ duration: 2.6, ease: [0.32, 0, 0.3, 1] }}
-            >
-                <CarSvg className="h-auto w-full" spinning={driving} />
-            </motion.div>
         </div>
     )
 }
@@ -213,27 +203,35 @@ const ThesisViz = () => (
     </svg>
 )
 
-// Game of the Goose: one clean die that tumbles — simple, playful, readable.
+// Game of the Goose: the goose itself, bobbing gently.
 const OcaViz = () => (
-    <svg viewBox="0 0 100 56" className="h-full w-full">
+    <svg viewBox="0 0 100 60" className="h-full w-full">
         <motion.g
-            style={{ originX: '50px', originY: '28px' }}
-            initial={{ rotate: -14, scale: 0.85, opacity: 0 }}
-            whileInView={{ rotate: 0, scale: 1, opacity: 1 }}
+            initial={{ opacity: 0, x: -6 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-60px' }}
-            transition={{ type: 'spring', stiffness: 200, damping: 13 }}
-            animate={{ y: [0, -3, 0] }}
+            transition={{ duration: 0.5, ease: 'easeOut' }}
         >
-            <rect x="31" y="9" width="38" height="38" rx="10"
-                className="fill-rose-500" />
-            {[[41, 19], [59, 19], [41, 37], [59, 37], [50, 28]].map(([cx, cy], i) => (
-                <motion.circle
-                    key={i} cx={cx} cy={cy} r="4" fill="#fff"
-                    initial={{ scale: 0 }} whileInView={{ scale: 1 }}
-                    viewport={{ once: true, margin: '-60px' }}
-                    transition={{ delay: 0.25 + i * 0.07, type: 'spring', stiffness: 320, damping: 15 }}
-                />
-            ))}
+            <motion.g animate={{ y: [0, -2.5, 0] }} transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}>
+                {/* body */}
+                <ellipse cx="52" cy="38" rx="24" ry="14" className="fill-slate-600 dark:fill-slate-100" />
+                {/* wing */}
+                <path d="M40 34c8-5 20-5 26 1-5 6-18 8-26-1z" className="fill-slate-400 dark:fill-slate-300" />
+                {/* tail */}
+                <path d="M76 34l12-5-3 8 3 3-12 1z" className="fill-slate-600 dark:fill-slate-100" />
+                {/* neck + head */}
+                <path d="M32 40c-5-4-6-11-4-17 2-7 8-11 13-10-4 2-7 6-8 11-1 6 1 11 5 14z"
+                    className="fill-slate-600 dark:fill-slate-100" />
+                <circle cx="39" cy="14" r="7.5" className="fill-slate-600 dark:fill-slate-100" />
+                <circle cx="41.5" cy="12" r="1.6" className="fill-white dark:fill-slate-800" />
+                {/* beak */}
+                <path d="M31.5 14l-9 2.5 9 3z" className="fill-amber-400" />
+            </motion.g>
+            {/* legs */}
+            <path d="M46 51v6M58 51v6" className="stroke-amber-400" strokeWidth="2.5" strokeLinecap="round" />
+            {/* water ripple */}
+            <motion.path d="M28 58h48" className="stroke-sky-400/60" strokeWidth="2" strokeLinecap="round"
+                animate={{ opacity: [0.35, 0.8, 0.35] }} transition={{ duration: 2.4, repeat: Infinity }} />
         </motion.g>
     </svg>
 )
@@ -315,24 +313,14 @@ export const UniversityMark = ({ id }) => {
     if (!uni) return null
     return (
         <motion.div
-            className="relative shrink-0"
+            className="shrink-0"
             initial={{ opacity: 0, y: 6 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.5, ease: 'easeOut' }}
         >
             <motion.div whileHover={{ y: -3, scale: 1.08 }} transition={{ type: 'spring', stiffness: 300, damping: 18 }}>
-            <Mark src={uni.src} label={uni.alt} size="lg" />
-            <svg viewBox="0 0 48 48" className="pointer-events-none absolute inset-0 h-full w-full">
-                <motion.rect
-                    x="1.5" y="1.5" width="45" height="45" rx="12" fill="none"
-                    strokeWidth="1.5" className="stroke-sky-500/50"
-                    pathLength={1} initial={{ pathLength: 0 }}
-                    whileInView={{ pathLength: 1 }}
-                    viewport={{ once: true, margin: '-60px' }}
-                    transition={{ duration: 1, ease: 'easeInOut', delay: 0.15 }}
-                />
-            </svg>
+                <Mark src={uni.src} label={uni.alt} size="lg" />
             </motion.div>
         </motion.div>
     )
