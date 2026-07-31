@@ -8,9 +8,13 @@ const links = [
 ];
 
 const toolbox = [
-    'Python', 'SQL', 'JavaScript / React', 'Pandas', 'scikit-learn',
-    'Power BI', 'Alteryx', 'Supabase', 'Git', 'FastAPI',
-];
+    { group: 'Languages', tone: 'sky', items: ['Python', 'SQL', 'JavaScript', 'TypeScript', 'Java'] },
+    { group: 'Data & ML', tone: 'cyan', items: ['pandas', 'NumPy', 'scikit-learn', 'XGBoost', 'LightGBM', 'Streamlit'] },
+    { group: 'Analytics & BI', tone: 'teal', items: ['Power BI', 'Alteryx', 'Excel'] },
+    { group: 'Web & App', tone: 'indigo', items: ['React', 'Next.js', 'Vite', 'Tailwind CSS', 'Framer Motion', 'Recharts'] },
+    { group: 'Backend & Data', tone: 'blue', items: ['FastAPI', 'PostgreSQL', 'Supabase', 'REST APIs', 'Java Servlets'] },
+    { group: 'Cloud & Tooling', tone: 'violet', items: ['Docker', 'Vercel', 'AWS RDS', 'Git', 'GitHub Actions'] },
+]
 
 export const content = {
     en: {
@@ -320,6 +324,15 @@ export const content = {
             },
         ],
     },
+};
+
+export const TOOLBOX_GROUPS_ES = {
+    'Languages': 'Lenguajes',
+    'Data & ML': 'Datos y ML',
+    'Analytics & BI': 'Analítica y BI',
+    'Web & App': 'Web y App',
+    'Backend & Data': 'Backend y Datos',
+    'Cloud & Tooling': 'Cloud y Herramientas',
 };
 
 export const RESUME = 'CV_MarcosIbanez_2026.pdf';

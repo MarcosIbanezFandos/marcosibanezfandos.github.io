@@ -10,10 +10,22 @@ import { motion, useReducedMotion } from 'framer-motion'
  * when the visitor prefers reduced motion.
  */
 
+/* ── Logo chip ──────────────────────────────────────────────────────────────
+   Every brand mark sits on the same white chip, which keeps each logo legible
+   in both themes and makes the row read as one consistent system.           */
+const LogoChip = ({ src, alt, size = 'md', className = '' }) => (
+    <span
+        className={`grid place-items-center rounded-xl bg-white shadow-sm ring-1 ring-slate-900/5 dark:ring-white/10 ${
+            size === 'lg' ? 'h-12 w-12 p-2' : 'h-11 w-11 p-1.5'
+        } ${className}`}
+    >
+        <img src={src} alt={alt} loading="lazy" decoding="async" className="h-full w-full object-contain" />
+    </span>
+)
+
 /* ── BMW · Transaction Pricing ──────────────────────────────────────────────
-   The three M stripes, a tachometer needle that sweeps as the card appears
-   (a nod to pricing "moving the needle") and a car silhouette that drives
-   across on hover.                                                          */
+   The three M stripes, the roundel easing in, and a real M3 Competition that
+   drives across the card on hover.                                          */
 export const BmwArt = ({ hovered }) => {
     const reduce = useReducedMotion()
     return (
@@ -33,67 +45,48 @@ export const BmwArt = ({ hovered }) => {
                 />
             </div>
 
-            {/* Tachometer */}
-            <svg viewBox="0 0 120 70" className="absolute right-3 top-3 h-16 w-28 opacity-70">
-                <path d="M12 58 A48 48 0 0 1 108 58" fill="none" stroke="currentColor"
-                    className="text-slate-300 dark:text-slate-700" strokeWidth="6" strokeLinecap="round" />
-                <motion.path
-                    d="M12 58 A48 48 0 0 1 108 58" fill="none" stroke="#0166B1" strokeWidth="6" strokeLinecap="round"
-                    pathLength={1} initial={{ pathLength: 0 }} whileInView={{ pathLength: 0.72 }}
-                    viewport={{ once: true, margin: '-80px' }}
-                    transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
-                />
-                <motion.line
-                    x1="60" y1="58" x2="60" y2="20" stroke="#E7222E" strokeWidth="2.5" strokeLinecap="round"
-                    style={{ originX: '60px', originY: '58px' }}
-                    initial={{ rotate: -88 }} whileInView={{ rotate: 42 }}
-                    viewport={{ once: true, margin: '-80px' }}
-                    transition={{ type: 'spring', stiffness: 42, damping: 12, delay: 0.2 }}
-                />
-                <circle cx="60" cy="58" r="4" className="fill-slate-400 dark:fill-slate-600" />
-            </svg>
-
-            {/* Car silhouette drives across on hover */}
-            <motion.svg
-                viewBox="0 0 120 40" className="absolute bottom-2 left-0 h-8 w-28 text-bmw-blue dark:text-bmw-light"
-                initial={{ x: '-40%', opacity: 0 }}
-                animate={hovered && !reduce ? { x: '520%', opacity: [0, 1, 1, 0] } : { x: '-40%', opacity: 0 }}
-                transition={{ duration: 1.9, ease: 'easeInOut' }}
-                aria-hidden="true"
+            <motion.div
+                className="absolute right-4 top-4"
+                initial={{ opacity: 0, scale: 0.7, rotate: -25 }}
+                whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ type: 'spring', stiffness: 200, damping: 16 }}
+                animate={hovered && !reduce ? { rotate: 360 } : {}}
             >
-                <path d="M6 28h4a8 8 0 0 1 16 0h44a8 8 0 0 1 16 0h6a3 3 0 0 0 3-3v-5c0-3-2-5-6-6l-14-2-9-7c-2-1.6-4-2-7-2H41c-3 0-5 1-7 3l-7 6-14 2c-4 .8-6 3-6 6v5a3 3 0 0 0 3 3z"
-                    fill="currentColor" opacity="0.85" />
-                <circle cx="18" cy="29" r="5" fill="currentColor" />
-                <circle cx="78" cy="29" r="5" fill="currentColor" />
-            </motion.svg>
+                <LogoChip src="/logos/bmw.svg" alt="BMW" />
+            </motion.div>
+
+            {/* Real M3 Competition drives across on hover */}
+            <motion.img
+                src="/logos/bmw-m3.webp" alt="" aria-hidden="true" loading="lazy" decoding="async"
+                className="absolute bottom-0 left-0 h-24 w-auto max-w-none opacity-90 sm:h-28"
+                initial={{ x: '-115%', opacity: 0 }}
+                animate={hovered && !reduce
+                    ? { x: ['-115%', '340%'], opacity: [0, 1, 1, 0] }
+                    : { x: '-115%', opacity: 0 }}
+                transition={{ duration: 2.4, ease: [0.33, 0, 0.25, 1] }}
+            />
         </div>
     )
 }
 
 /* ── Pamesa · Ceramics ──────────────────────────────────────────────────────
-   Tiles tessellate into place, the way a ceramic surface is laid.           */
+   The logo settles onto the card like a tile being laid, and shimmers on
+   hover the way a glazed surface catches light.                             */
 export const PamesaArt = ({ hovered }) => {
-    const tiles = Array.from({ length: 16 })
+    const reduce = useReducedMotion()
     return (
         <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl">
-            <div className="absolute right-3 top-3 grid grid-cols-4 gap-[3px] opacity-60">
-                {tiles.map((_, i) => {
-                    const row = Math.floor(i / 4)
-                    const col = i % 4
-                    return (
-                        <motion.span
-                            key={i}
-                            className="block h-3.5 w-3.5 rounded-[3px]"
-                            style={{ background: (row + col) % 2 ? '#C1663F' : '#E4A47C' }}
-                            initial={{ opacity: 0, rotateY: 90, scale: 0.6 }}
-                            whileInView={{ opacity: 1, rotateY: 0, scale: 1 }}
-                            viewport={{ once: true, margin: '-80px' }}
-                            transition={{ duration: 0.45, delay: 0.04 * (row + col), ease: 'easeOut' }}
-                            animate={hovered ? { rotateY: [0, 180, 360] } : {}}
-                        />
-                    )
-                })}
-            </div>
+            <motion.div
+                className="absolute right-4 top-4"
+                initial={{ opacity: 0, rotateY: 90, y: -8 }}
+                whileInView={{ opacity: 1, rotateY: 0, y: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ duration: 0.6, ease: 'easeOut' }}
+                animate={hovered && !reduce ? { rotateY: [0, 180, 360] } : {}}
+            >
+                <LogoChip src="/logos/pamesa.png" alt="Pamesa Ceramics" />
+            </motion.div>
             <motion.div
                 className="absolute left-0 top-0 h-full w-[3px] bg-clay-500"
                 initial={{ scaleY: 0 }} whileInView={{ scaleY: 1 }}
@@ -105,45 +98,42 @@ export const PamesaArt = ({ hovered }) => {
 }
 
 /* ── ETRA I+D · Data / smart cities ─────────────────────────────────────────
-   An ETL pipeline: nodes light up in sequence while data flows along the
-   dashed edges.                                                             */
-export const EtraArt = () => (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl">
-        <svg viewBox="0 0 140 60" className="absolute right-3 top-4 h-16 w-32 opacity-75">
-            <path d="M14 30 H54 M70 30 H110" stroke="currentColor" strokeWidth="1.5"
-                strokeDasharray="4 6" className="animate-dash-flow text-emerald-500/70" fill="none" />
-            {[14, 62, 118].map((cx, i) => (
-                <motion.circle
-                    key={cx} cx={cx} cy="30" r="7" fill="none" strokeWidth="2"
-                    className={i === 1 ? 'stroke-teal-500' : 'stroke-emerald-500'}
-                    initial={{ scale: 0, opacity: 0 }}
-                    whileInView={{ scale: 1, opacity: 1 }}
+   The logo arrives with a signal pulse rippling out from it.                */
+export const EtraArt = ({ hovered }) => {
+    const reduce = useReducedMotion()
+    return (
+        <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl">
+            <div className="absolute right-4 top-4">
+                <motion.span
+                    className="absolute inset-0 rounded-xl ring-2 ring-emerald-400/60"
+                    initial={{ opacity: 0 }}
+                    animate={reduce ? {} : { scale: [1, 1.55], opacity: [0.55, 0] }}
+                    transition={{ duration: 2.2, repeat: Infinity, ease: 'easeOut' }}
+                />
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.7 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true, margin: '-80px' }}
-                    transition={{ duration: 0.4, delay: 0.15 * i, ease: 'backOut' }}
-                    style={{ originX: `${cx}px`, originY: '30px' }}
-                />
-            ))}
-            {[14, 62, 118].map((cx, i) => (
-                <motion.circle
-                    key={`p${cx}`} cx={cx} cy="30" r="3" className="fill-emerald-400"
-                    animate={{ opacity: [0.25, 1, 0.25] }}
-                    transition={{ duration: 2.2, repeat: Infinity, delay: i * 0.5 }}
-                />
-            ))}
-        </svg>
-        <motion.div
-            className="absolute left-0 top-0 h-full w-[3px] bg-emerald-500"
-            initial={{ scaleY: 0 }} whileInView={{ scaleY: 1 }}
-            viewport={{ once: true, margin: '-80px' }}
-            style={{ originY: 0 }} transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        />
-    </div>
-)
+                    transition={{ type: 'spring', stiffness: 220, damping: 17 }}
+                    animate={hovered && !reduce ? { y: [0, -4, 0] } : {}}
+                >
+                    <LogoChip src="/logos/etra.png" alt="ETRA I+D" />
+                </motion.div>
+            </div>
+            <motion.div
+                className="absolute left-0 top-0 h-full w-[3px] bg-emerald-500"
+                initial={{ scaleY: 0 }} whileInView={{ scaleY: 1 }}
+                viewport={{ once: true, margin: '-80px' }}
+                style={{ originY: 0 }} transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            />
+        </div>
+    )
+}
 
 export const CompanyArt = ({ theme, hovered }) => {
     if (theme === 'bmw') return <BmwArt hovered={hovered} />
     if (theme === 'pamesa') return <PamesaArt hovered={hovered} />
-    if (theme === 'etra') return <EtraArt />
+    if (theme === 'etra') return <EtraArt hovered={hovered} />
     return null
 }
 
@@ -340,13 +330,13 @@ export const NeuralArt = () => {
 }
 
 /* ── University marks ───────────────────────────────────────────────────────
-   Hand-drawn monograms in each institution's colour, not their trademarked
-   logo files. A ring traces around the mark as it scrolls into view and the
-   badge lifts on hover.                                                     */
+   Same chip language as the employers, so Education reads as part of the
+   same system: the logo scales in, a ring traces around it, and it lifts on
+   hover.                                                                    */
 const UNIS = {
-    upv: { label: 'UPV', from: '#C1002A', to: '#8E0020' },
-    tum: { label: 'TUM', from: '#3070B3', to: '#0A4F91' },
-    ie: { label: 'IE', from: '#1D3A8A', to: '#0B1F5B' },
+    upv: { src: '/logos/upv.svg', alt: 'Universitat Politècnica de València', ring: 'ring-red-500/40' },
+    tum: { src: '/logos/tum.svg', alt: 'Technical University of Munich', ring: 'ring-sky-500/40' },
+    ie: { src: '/logos/ie.svg', alt: 'IE University', ring: 'ring-indigo-500/40' },
 }
 
 export const UniversityMark = ({ id }) => {
@@ -354,20 +344,18 @@ export const UniversityMark = ({ id }) => {
     if (!uni) return null
     return (
         <motion.div
-            className="relative grid h-11 w-11 shrink-0 place-items-center rounded-xl text-white shadow-sm"
-            style={{ backgroundImage: `linear-gradient(140deg, ${uni.from}, ${uni.to})` }}
-            initial={{ opacity: 0, scale: 0.6, rotate: -8 }}
-            whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+            className="relative shrink-0"
+            initial={{ opacity: 0, scale: 0.7, y: 6 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
-            whileHover={{ y: -3, rotate: 2, scale: 1.05 }}
-            transition={{ type: 'spring', stiffness: 260, damping: 18 }}
+            whileHover={{ y: -3, scale: 1.06 }}
+            transition={{ type: 'spring', stiffness: 240, damping: 18 }}
         >
-            <span className="text-[11px] font-black tracking-tight">{uni.label}</span>
-            {/* ring traces around the badge */}
-            <svg viewBox="0 0 44 44" className="pointer-events-none absolute inset-0 h-full w-full">
+            <LogoChip src={uni.src} alt={uni.alt} size="lg" />
+            <svg viewBox="0 0 48 48" className="pointer-events-none absolute inset-0 h-full w-full">
                 <motion.rect
-                    x="1.5" y="1.5" width="41" height="41" rx="11" fill="none"
-                    stroke="currentColor" strokeWidth="1.5" className="text-white/60"
+                    x="1.5" y="1.5" width="45" height="45" rx="12" fill="none"
+                    strokeWidth="1.5" className="stroke-sky-500/50"
                     pathLength={1} initial={{ pathLength: 0 }}
                     whileInView={{ pathLength: 1 }}
                     viewport={{ once: true, margin: '-60px' }}

@@ -4,11 +4,22 @@ import {
     Github, Linkedin, Mail, FileText, ArrowUpRight, MapPin, Sun, Moon, Languages,
     GraduationCap, HeartHandshake, Sparkles, Lock,
 } from 'lucide-react'
-import { content, RESUME } from './content.js'
+import { content, RESUME, TOOLBOX_GROUPS_ES } from './content.js'
 import { Reveal, Section, GlowCard, Background, ScrollProgress, ScrambleText, Chip } from './components/UI.jsx'
 import { CompanyArt, ProjectViz, NeuralArt, UniversityMark, FLAGS } from './components/Art.jsx'
 
 const ICONS = { github: Github, linkedin: Linkedin, mail: Mail, 'file-text': FileText }
+// One blue-family tone per toolbox category, so the groups read apart
+// without breaking the palette.
+const TONES = {
+    sky: 'bg-sky-400/10 text-sky-700 dark:text-sky-300',
+    cyan: 'bg-cyan-400/10 text-cyan-700 dark:text-cyan-300',
+    teal: 'bg-teal-400/10 text-teal-700 dark:text-teal-300',
+    indigo: 'bg-indigo-400/10 text-indigo-700 dark:text-indigo-300',
+    blue: 'bg-blue-400/10 text-blue-700 dark:text-blue-300',
+    violet: 'bg-violet-400/10 text-violet-700 dark:text-violet-300',
+}
+
 const SECTIONS = ['about', 'experience', 'projects', 'publications', 'education', 'certifications', 'volunteering']
 
 export default function App() {
@@ -145,11 +156,31 @@ export default function App() {
                                 ))}
                             </div>
                             <Reveal delay={0.15}>
-                                <div className="mt-7">
-                                    <div className="mb-2.5 text-[11px] font-black uppercase tracking-widest text-slate-500">{t.ui.toolbox}</div>
-                                    <ul className="flex flex-wrap gap-1.5">
-                                        {t.profile.toolbox.map(s => <Chip key={s} tone="accent">{s}</Chip>)}
-                                    </ul>
+                                <div className="mt-8">
+                                    <div className="mb-3 text-[11px] font-black uppercase tracking-widest text-slate-500">{t.ui.toolbox}</div>
+                                    <div className="space-y-3">
+                                        {t.profile.toolbox.map((grp, gi) => (
+                                            <div key={grp.group} className="flex flex-col gap-1.5 sm:flex-row sm:items-baseline sm:gap-3">
+                                                <span className="w-32 shrink-0 text-[10px] font-black uppercase tracking-widest text-slate-400">
+                                                    {lang === 'es' ? (TOOLBOX_GROUPS_ES[grp.group] || grp.group) : grp.group}
+                                                </span>
+                                                <ul className="flex flex-wrap gap-1.5">
+                                                    {grp.items.map((s, si) => (
+                                                        <motion.li
+                                                            key={s}
+                                                            initial={{ opacity: 0, y: 6 }}
+                                                            whileInView={{ opacity: 1, y: 0 }}
+                                                            viewport={{ once: true, margin: '-60px' }}
+                                                            transition={{ duration: 0.35, delay: gi * 0.05 + si * 0.025 }}
+                                                            className={`rounded-full px-3 py-1 text-[11px] font-semibold leading-5 ${TONES[grp.tone]}`}
+                                                        >
+                                                            {s}
+                                                        </motion.li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
                             </Reveal>
                         </Section>
@@ -296,20 +327,33 @@ export default function App() {
                                 {t.certifications.map((c, i) => (
                                     <Reveal key={c.title} delay={i * 0.04}>
                                         <li className="relative overflow-hidden rounded-xl border border-slate-200/80 bg-white/50 dark:border-slate-700/60 dark:bg-slate-800/30">
-                                            {/* muted flag across the whole row */}
-                                            <div className="absolute inset-0 opacity-[0.14] dark:opacity-[0.18]"
-                                                style={{ backgroundImage: FLAGS[c.code] }} aria-hidden="true" />
-                                            {/* vivid flag up to the proficiency level */}
+                                            {/* One flag at its true 3:2 ratio, anchored left so it sits
+                                                behind the language name and dissolves into the bar. */}
                                             <motion.div
-                                                className="absolute inset-y-0 left-0 opacity-40 dark:opacity-35"
-                                                style={{ backgroundImage: FLAGS[c.code], backgroundSize: `${(100 / c.level) * 100}% 100%` }}
-                                                initial={{ width: 0 }} whileInView={{ width: `${c.level}%` }}
+                                                className="absolute inset-y-0 left-0 w-1/2"
+                                                style={{
+                                                    backgroundImage: FLAGS[c.code],
+                                                    backgroundSize: 'auto 100%',
+                                                    backgroundRepeat: 'no-repeat',
+                                                    maskImage: 'linear-gradient(to right, #000 0%, #000 34%, transparent 96%)',
+                                                    WebkitMaskImage: 'linear-gradient(to right, #000 0%, #000 34%, transparent 96%)',
+                                                }}
+                                                initial={{ opacity: 0, x: -12 }}
+                                                whileInView={{ opacity: 0.62, x: 0 }}
                                                 viewport={{ once: true, margin: '-60px' }}
-                                                transition={{ duration: 1, delay: 0.06 * i, ease: [0.22, 1, 0.36, 1] }}
+                                                transition={{ duration: 0.6, delay: 0.06 * i, ease: 'easeOut' }}
                                                 aria-hidden="true"
                                             />
-                                            {/* scrim keeps the text crisp over any flag */}
-                                            <div className="absolute inset-0 bg-gradient-to-r from-white/85 via-white/70 to-white/85 dark:from-slate-900/85 dark:via-slate-900/70 dark:to-slate-900/85" aria-hidden="true" />
+                                            {/* scrim so the name stays crisp on top of the flag */}
+                                            <div className="absolute inset-0 bg-gradient-to-r from-white/70 via-white/45 to-transparent dark:from-slate-950/75 dark:via-slate-950/45" aria-hidden="true" />
+                                            {/* proficiency as a progress line along the bottom edge */}
+                                            <motion.div
+                                                className="absolute bottom-0 left-0 h-[3px] rounded-full bg-gradient-to-r from-sky-400 to-indigo-500"
+                                                initial={{ width: 0 }} whileInView={{ width: `${c.level}%` }}
+                                                viewport={{ once: true, margin: '-60px' }}
+                                                transition={{ duration: 1, delay: 0.1 + 0.06 * i, ease: [0.22, 1, 0.36, 1] }}
+                                                aria-hidden="true"
+                                            />
 
                                             <div className="relative flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1 px-4 py-3">
                                                 <span className="text-sm font-bold text-slate-900 dark:text-slate-100">{c.title}</span>
@@ -350,6 +394,13 @@ export default function App() {
 
                         <footer className="pb-16 text-xs leading-relaxed text-slate-500">
                             <p>© {year} Marcos Ibáñez. {t.ui.builtWith}</p>
+                            <p className="mt-1.5 text-[11px] text-slate-500/80">
+                                BMW M3 Competition photograph by Alexander Migl —{' '}
+                                <a className="underline decoration-dotted underline-offset-2 hover:text-slate-600 dark:hover:text-slate-300"
+                                   href="https://commons.wikimedia.org/wiki/File:BMW_M3_Competition_(G80)_Auto_Zuerich_2021_IMG_0043.jpg"
+                                   target="_blank" rel="noreferrer noopener">CC BY-SA 4.0</a>.
+                                Company and university marks are the property of their respective owners.
+                            </p>
                         </footer>
                     </main>
                 </div>
