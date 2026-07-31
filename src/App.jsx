@@ -155,34 +155,7 @@ export default function App() {
                                     <Reveal key={i} delay={i * 0.06}><p>{p}</p></Reveal>
                                 ))}
                             </div>
-                            <Reveal delay={0.15}>
-                                <div className="mt-8">
-                                    <div className="mb-3 text-[11px] font-black uppercase tracking-widest text-slate-500">{t.ui.toolbox}</div>
-                                    <div className="space-y-3">
-                                        {t.profile.toolbox.map((grp, gi) => (
-                                            <div key={grp.group} className="flex flex-col gap-1.5 sm:flex-row sm:items-baseline sm:gap-3">
-                                                <span className="w-32 shrink-0 text-[10px] font-black uppercase tracking-widest text-slate-400">
-                                                    {lang === 'es' ? (TOOLBOX_GROUPS_ES[grp.group] || grp.group) : grp.group}
-                                                </span>
-                                                <ul className="flex flex-wrap gap-1.5">
-                                                    {grp.items.map((s, si) => (
-                                                        <motion.li
-                                                            key={s}
-                                                            initial={{ opacity: 0, y: 6 }}
-                                                            whileInView={{ opacity: 1, y: 0 }}
-                                                            viewport={{ once: true, margin: '-60px' }}
-                                                            transition={{ duration: 0.35, delay: gi * 0.05 + si * 0.025 }}
-                                                            className={`rounded-full px-3 py-1 text-[11px] font-semibold leading-5 ${TONES[grp.tone]}`}
-                                                        >
-                                                            {s}
-                                                        </motion.li>
-                                                    ))}
-                                                </ul>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            </Reveal>
+
                         </Section>
 
                         {/* Experience */}
@@ -307,7 +280,18 @@ export default function App() {
                                         <li className="flex items-start gap-4">
                                             <UniversityMark id={e.logo} />
                                             <div className="pb-1">
-                                                <h3 className="font-bold text-slate-900 dark:text-slate-100">{e.degree}</h3>
+                                                <h3 className="flex flex-wrap items-center gap-2 font-bold text-slate-900 dark:text-slate-100">
+                                                    {e.degree}
+                                                    {e.inProgress && (
+                                                        <span className="inline-flex items-center gap-1.5 rounded-full bg-sky-400/10 px-2.5 py-0.5 text-[10px] font-black uppercase tracking-widest text-sky-700 dark:text-sky-300">
+                                                            <span className="relative flex h-1.5 w-1.5">
+                                                                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-400 opacity-75" />
+                                                                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-sky-500" />
+                                                            </span>
+                                                            {t.ui.inProgress}
+                                                        </span>
+                                                    )}
+                                                </h3>
                                                 <div className="text-sm font-semibold text-slate-600 dark:text-slate-300">{e.school}</div>
                                                 <div className="mt-0.5 flex items-center gap-1.5 text-xs text-slate-500">
                                                     <MapPin size={12} /> {e.city} · {e.details}
@@ -391,6 +375,35 @@ export default function App() {
                                 ))}
                             </ul>
                         </Section>
+
+                            <Reveal delay={0.15}>
+                                <div className="mb-16 border-t border-slate-200/70 pt-8 dark:border-slate-800">
+                                    <div className="mb-3 text-[11px] font-black uppercase tracking-widest text-slate-500">{t.ui.toolbox}</div>
+                                    <div className="space-y-3">
+                                        {t.profile.toolbox.map((grp, gi) => (
+                                            <div key={grp.group} className="flex flex-col gap-1.5 sm:flex-row sm:items-baseline sm:gap-3">
+                                                <span className="w-32 shrink-0 text-[10px] font-black uppercase tracking-widest text-slate-400">
+                                                    {lang === 'es' ? (TOOLBOX_GROUPS_ES[grp.group] || grp.group) : grp.group}
+                                                </span>
+                                                <ul className="flex flex-wrap gap-1.5">
+                                                    {grp.items.map((s, si) => (
+                                                        <motion.li
+                                                            key={s}
+                                                            initial={{ opacity: 0, y: 6 }}
+                                                            whileInView={{ opacity: 1, y: 0 }}
+                                                            viewport={{ once: true, margin: '-60px' }}
+                                                            transition={{ duration: 0.35, delay: gi * 0.05 + si * 0.025 }}
+                                                            className={`rounded-full px-3 py-1 text-[11px] font-semibold leading-5 ${TONES[grp.tone]}`}
+                                                        >
+                                                            {s}
+                                                        </motion.li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </Reveal>
 
                         <footer className="pb-16 text-xs leading-relaxed text-slate-500">
                             <p>© {year} Marcos Ibáñez. {t.ui.builtWith}</p>

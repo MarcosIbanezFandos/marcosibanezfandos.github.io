@@ -1,5 +1,6 @@
 import React from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
+import { CarSvg } from './CarSvg.jsx'
 
 /**
  * Bespoke, per-employer / per-project artwork.
@@ -10,17 +11,29 @@ import { motion, useReducedMotion } from 'framer-motion'
  * when the visitor prefers reduced motion.
  */
 
-/* ── Logo chip ──────────────────────────────────────────────────────────────
-   Every brand mark sits on the same white chip, which keeps each logo legible
-   in both themes and makes the row read as one consistent system.           */
-const LogoChip = ({ src, alt, size = 'md', className = '' }) => (
+/* ── Brand mark ────────────────────────────────────────────────────────────
+   Each logo is used as a CSS mask and painted with the current text colour, so
+   it renders as a single tone with no background at all: dark ink on the light
+   theme, light ink on the dark one.                                          */
+const Mark = ({ src, label, className = '', size = 'md' }) => (
     <span
-        className={`grid place-items-center rounded-xl bg-white shadow-sm ring-1 ring-slate-900/5 dark:ring-white/10 ${
-            size === 'lg' ? 'h-12 w-12 p-2' : 'h-11 w-11 p-1.5'
+        role="img"
+        aria-label={label}
+        title={label}
+        className={`block shrink-0 bg-slate-700/85 dark:bg-slate-200/90 ${
+            size === 'lg' ? 'h-10 w-10' : 'h-9 w-9'
         } ${className}`}
-    >
-        <img src={src} alt={alt} loading="lazy" decoding="async" className="h-full w-full object-contain" />
-    </span>
+        style={{
+            maskImage: `url(${src})`,
+            WebkitMaskImage: `url(${src})`,
+            maskRepeat: 'no-repeat',
+            WebkitMaskRepeat: 'no-repeat',
+            maskPosition: 'center',
+            WebkitMaskPosition: 'center',
+            maskSize: 'contain',
+            WebkitMaskSize: 'contain',
+        }}
+    />
 )
 
 /* ── BMW · Transaction Pricing ──────────────────────────────────────────────
@@ -28,6 +41,7 @@ const LogoChip = ({ src, alt, size = 'md', className = '' }) => (
    drives across the card on hover.                                          */
 export const BmwArt = ({ hovered }) => {
     const reduce = useReducedMotion()
+    const driving = hovered && !reduce
     return (
         <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl">
             {/* M stripes */}
@@ -35,8 +49,7 @@ export const BmwArt = ({ hovered }) => {
                 <motion.div
                     className="h-full w-full"
                     initial={{ y: '-100%' }}
-                    whileInView={{ y: 0 }}
-                    viewport={{ once: true, margin: '-80px' }}
+                    animate={{ y: 0 }}
                     transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
                     style={{
                         background:
@@ -47,25 +60,27 @@ export const BmwArt = ({ hovered }) => {
 
             <motion.div
                 className="absolute right-4 top-4"
-                initial={{ opacity: 0, scale: 0.7, rotate: -25 }}
-                whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-                viewport={{ once: true, margin: '-80px' }}
-                transition={{ type: 'spring', stiffness: 200, damping: 16 }}
-                animate={hovered && !reduce ? { rotate: 360 } : {}}
+                initial={{ opacity: 0, scale: 0.7 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ type: 'spring', stiffness: 200, damping: 16, delay: 0.15 }}
             >
-                <LogoChip src="/logos/bmw.svg" alt="BMW" />
+                <motion.div
+                    animate={driving ? { rotate: 360 } : { rotate: 0 }}
+                    transition={driving ? { duration: 1.6, ease: 'linear', repeat: Infinity } : { duration: 0.4 }}
+                >
+                    <Mark src="/logos/bmw.svg" label="BMW" />
+                </motion.div>
             </motion.div>
 
-            {/* Real M3 Competition drives across on hover */}
-            <motion.img
-                src="/logos/bmw-m3.webp" alt="" aria-hidden="true" loading="lazy" decoding="async"
-                className="absolute bottom-0 left-0 h-24 w-auto max-w-none opacity-90 sm:h-28"
-                initial={{ x: '-115%', opacity: 0 }}
-                animate={hovered && !reduce
-                    ? { x: ['-115%', '340%'], opacity: [0, 1, 1, 0] }
-                    : { x: '-115%', opacity: 0 }}
-                transition={{ duration: 2.4, ease: [0.33, 0, 0.25, 1] }}
-            />
+            {/* Vector sedan: wheels spin while it drives across on hover */}
+            <motion.div
+                className="absolute bottom-1 left-0 w-40 text-slate-700 dark:text-slate-200 sm:w-48"
+                initial={{ x: '-130%', opacity: 0 }}
+                animate={driving ? { x: ['-130%', '330%'], opacity: [0, 1, 1, 0] } : { x: '-130%', opacity: 0 }}
+                transition={{ duration: 2.6, ease: [0.32, 0, 0.3, 1] }}
+            >
+                <CarSvg className="h-auto w-full" spinning={driving} />
+            </motion.div>
         </div>
     )
 }
@@ -79,18 +94,20 @@ export const PamesaArt = ({ hovered }) => {
         <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl">
             <motion.div
                 className="absolute right-4 top-4"
-                initial={{ opacity: 0, rotateY: 90, y: -8 }}
-                whileInView={{ opacity: 1, rotateY: 0, y: 0 }}
-                viewport={{ once: true, margin: '-80px' }}
-                transition={{ duration: 0.6, ease: 'easeOut' }}
-                animate={hovered && !reduce ? { rotateY: [0, 180, 360] } : {}}
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: 'easeOut', delay: 0.15 }}
             >
-                <LogoChip src="/logos/pamesa.png" alt="Pamesa Ceramics" />
+                <motion.div
+                    animate={hovered && !reduce ? { rotateY: [0, 180, 360] } : { rotateY: 0 }}
+                    transition={{ duration: 1.2, ease: 'easeInOut' }}
+                >
+                    <Mark src="/logos/pamesa.png" label="Pamesa Ceramics" />
+                </motion.div>
             </motion.div>
             <motion.div
                 className="absolute left-0 top-0 h-full w-[3px] bg-clay-500"
-                initial={{ scaleY: 0 }} whileInView={{ scaleY: 1 }}
-                viewport={{ once: true, margin: '-80px' }}
+                initial={{ scaleY: 0 }} animate={{ scaleY: 1 }}
                 style={{ originY: 0 }} transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             />
         </div>
@@ -112,18 +129,18 @@ export const EtraArt = ({ hovered }) => {
                 />
                 <motion.div
                     initial={{ opacity: 0, scale: 0.7 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true, margin: '-80px' }}
-                    transition={{ type: 'spring', stiffness: 220, damping: 17 }}
-                    animate={hovered && !reduce ? { y: [0, -4, 0] } : {}}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ type: 'spring', stiffness: 220, damping: 17, delay: 0.15 }}
                 >
-                    <LogoChip src="/logos/etra.png" alt="ETRA I+D" />
+                    <motion.div animate={hovered && !reduce ? { y: [0, -4, 0] } : { y: 0 }}
+                        transition={{ duration: 1, repeat: hovered ? Infinity : 0 }}>
+                        <Mark src="/logos/etra.png" label="ETRA I+D" />
+                    </motion.div>
                 </motion.div>
             </div>
             <motion.div
                 className="absolute left-0 top-0 h-full w-[3px] bg-emerald-500"
-                initial={{ scaleY: 0 }} whileInView={{ scaleY: 1 }}
-                viewport={{ once: true, margin: '-80px' }}
+                initial={{ scaleY: 0 }} animate={{ scaleY: 1 }}
                 style={{ originY: 0 }} transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             />
         </div>
@@ -140,47 +157,38 @@ export const CompanyArt = ({ theme, hovered }) => {
 /* ── Project thumbnails ─────────────────────────────────────────────────────
    Each project gets a live miniature of what it actually does.              */
 
-// Fandance: the app's allocation gauge — segments draw in, then a needle
-// settles on the target weight, mirroring what the rebalancer actually does.
-const FandanceViz = () => {
-    const arcs = [
-        { color: '#10b981', from: 0, to: 0.36 },
-        { color: '#6366f1', from: 0.36, to: 0.64 },
-        { color: '#8b5cf6', from: 0.64, to: 0.84 },
-        { color: '#f59e0b', from: 0.84, to: 1 },
-    ]
-    const R = 34
-    const arc = (from, to) => {
-        const a0 = Math.PI * (1 - from), a1 = Math.PI * (1 - to)
-        const x0 = 50 + R * Math.cos(a0), y0 = 44 - R * Math.sin(a0)
-        const x1 = 50 + R * Math.cos(a1), y1 = 44 - R * Math.sin(a1)
-        return `M ${x0} ${y0} A ${R} ${R} 0 0 1 ${x1} ${y1}`
-    }
-    return (
-        <svg viewBox="0 0 100 52" className="h-full w-full">
-            {arcs.map((a, i) => (
-                <motion.path
-                    key={i} d={arc(a.from, a.to)} stroke={a.color} strokeWidth="9" fill="none" strokeLinecap="butt"
-                    initial={{ pathLength: 0, opacity: 0 }}
-                    whileInView={{ pathLength: 1, opacity: 1 }}
-                    viewport={{ once: true, margin: '-60px' }}
-                    transition={{ duration: 0.7, delay: 0.12 * i, ease: 'easeOut' }}
-                />
-            ))}
-            {/* needle settling on target */}
-            <motion.line
-                x1="50" y1="44" x2="50" y2="16" strokeWidth="2.5" strokeLinecap="round"
-                className="stroke-slate-700 dark:stroke-slate-200"
-                style={{ originX: '50px', originY: '44px' }}
-                initial={{ rotate: -78, opacity: 0 }}
-                whileInView={{ rotate: 26, opacity: 1 }}
-                viewport={{ once: true, margin: '-60px' }}
-                transition={{ type: 'spring', stiffness: 45, damping: 11, delay: 0.5 }}
-            />
-            <circle cx="50" cy="44" r="3.5" className="fill-slate-700 dark:fill-slate-200" />
-        </svg>
-    )
-}
+// Fandance: a clean upward line with a soft area fill — instantly readable as
+// "a portfolio growing", without the clutter of a full chart.
+const FandanceViz = () => (
+    <svg viewBox="0 0 100 56" className="h-full w-full" preserveAspectRatio="none">
+        <defs>
+            <linearGradient id="fdFill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#10b981" stopOpacity="0.45" />
+                <stop offset="100%" stopColor="#10b981" stopOpacity="0" />
+            </linearGradient>
+        </defs>
+        <motion.path
+            d="M4 46 C 22 42, 30 34, 44 30 C 58 26, 66 16, 96 8 L96 56 L4 56 Z"
+            fill="url(#fdFill)"
+            initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.8, delay: 0.35 }}
+        />
+        <motion.path
+            d="M4 46 C 22 42, 30 34, 44 30 C 58 26, 66 16, 96 8"
+            fill="none" stroke="#10b981" strokeWidth="3.5" strokeLinecap="round"
+            initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 1.1, ease: 'easeOut' }}
+        />
+        <motion.circle
+            cx="96" cy="8" r="4" fill="#10b981"
+            initial={{ scale: 0 }} whileInView={{ scale: 1 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ type: 'spring', stiffness: 300, damping: 14, delay: 1 }}
+        />
+    </svg>
+)
 
 // Bachelor thesis: an ROC curve drawing itself above the diagonal — a
 // deliberately different visual language from the fraud project's matrix.
@@ -205,49 +213,32 @@ const ThesisViz = () => (
     </svg>
 )
 
-// Game of the Goose: a spiral board where tokens hop forward, plus a die.
-const OcaViz = () => {
-    const squares = [
-        [14, 46], [24, 42], [34, 38], [44, 36], [54, 36], [64, 38], [72, 44],
-    ]
-    return (
-        <svg viewBox="0 0 90 60" className="h-full w-full">
-            <path d="M14 46 C 30 30, 60 26, 72 44" fill="none"
-                className="stroke-slate-300 dark:stroke-slate-700" strokeWidth="1.5" strokeDasharray="2 3" />
-            {squares.map(([cx, cy], i) => (
-                <motion.rect
-                    key={i} x={cx - 4} y={cy - 4} width="8" height="8" rx="2"
-                    className={i % 3 === 0 ? 'fill-emerald-500' : 'fill-slate-300 dark:fill-slate-600'}
-                    initial={{ opacity: 0, y: -6 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+// Game of the Goose: one clean die that tumbles — simple, playful, readable.
+const OcaViz = () => (
+    <svg viewBox="0 0 100 56" className="h-full w-full">
+        <motion.g
+            style={{ originX: '50px', originY: '28px' }}
+            initial={{ rotate: -14, scale: 0.85, opacity: 0 }}
+            whileInView={{ rotate: 0, scale: 1, opacity: 1 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ type: 'spring', stiffness: 200, damping: 13 }}
+            animate={{ y: [0, -3, 0] }}
+        >
+            <rect x="31" y="9" width="38" height="38" rx="10"
+                className="fill-rose-500" />
+            {[[41, 19], [59, 19], [41, 37], [59, 37], [50, 28]].map(([cx, cy], i) => (
+                <motion.circle
+                    key={i} cx={cx} cy={cy} r="4" fill="#fff"
+                    initial={{ scale: 0 }} whileInView={{ scale: 1 }}
                     viewport={{ once: true, margin: '-60px' }}
-                    transition={{ duration: 0.35, delay: 0.06 * i, ease: 'backOut' }}
+                    transition={{ delay: 0.25 + i * 0.07, type: 'spring', stiffness: 320, damping: 15 }}
                 />
             ))}
-            {/* token hopping along the board */}
-            <motion.circle
-                r="4" className="fill-rose-500"
-                initial={{ opacity: 0 }}
-                whileInView={{
-                    opacity: 1,
-                    cx: squares.map(s => s[0]),
-                    cy: squares.map(s => s[1] - 9),
-                }}
-                viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 2.4, delay: 0.5, times: squares.map((_, i) => i / (squares.length - 1)), ease: 'easeInOut' }}
-            />
-            {/* die */}
-            <rect x="66" y="8" width="16" height="16" rx="4" className="fill-white stroke-slate-300 dark:fill-slate-700 dark:stroke-slate-600" strokeWidth="1.5" />
-            {[[71, 13], [77, 13], [71, 19], [77, 19]].map(([cx, cy], i) => (
-                <motion.circle key={i} cx={cx} cy={cy} r="1.6" className="fill-slate-600 dark:fill-slate-200"
-                    animate={{ opacity: [0.35, 1, 0.35] }}
-                    transition={{ duration: 1.6, repeat: Infinity, delay: i * 0.18 }} />
-            ))}
-        </svg>
-    )
-}
+        </motion.g>
+    </svg>
+)
 
-// Fraud detection: a confusion-matrix grid where the "caught fraud" cell pulses.
+// Credit-card fraud: a confusion matrix where the caught-fraud cell pulses.
 const FraudViz = () => (
     <div className="grid h-full w-full grid-cols-2 gap-1.5 p-1">
         {[0, 1, 2, 3].map(i => (
@@ -264,32 +255,12 @@ const FraudViz = () => (
     </div>
 )
 
-// Rebalancer: bars settling onto their dashed target line.
-const RebalancerViz = () => {
-    const bars = [58, 92, 34, 70]
-    return (
-        <div className="relative flex h-full w-full items-end gap-2 p-2">
-            <div className="absolute inset-x-2 top-1/3 border-t border-dashed border-slate-400/70" />
-            {bars.map((h, i) => (
-                <motion.div
-                    key={i} className="flex-1 rounded-t-sm bg-sky-500"
-                    initial={{ height: '10%' }}
-                    whileInView={{ height: `${h}%` }}
-                    viewport={{ once: true, margin: '-60px' }}
-                    transition={{ type: 'spring', stiffness: 60, damping: 13, delay: 0.1 * i }}
-                />
-            ))}
-        </div>
-    )
-}
-
 export const ProjectViz = ({ theme }) => {
     const inner =
         theme === 'fandance' ? <FandanceViz /> :
         theme === 'fraud' ? <FraudViz /> :
         theme === 'thesis' ? <ThesisViz /> :
-        theme === 'oca' ? <OcaViz /> :
-        theme === 'rebalancer' ? <RebalancerViz /> : null
+        theme === 'oca' ? <OcaViz /> : null
     if (!inner) return null
     return (
         <div className="h-16 w-24 shrink-0 rounded-xl border border-slate-200/70 bg-slate-100/60 p-1 dark:border-slate-700/60 dark:bg-slate-800/50 sm:h-20 sm:w-32">
@@ -345,13 +316,13 @@ export const UniversityMark = ({ id }) => {
     return (
         <motion.div
             className="relative shrink-0"
-            initial={{ opacity: 0, scale: 0.7, y: 6 }}
-            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+            initial={{ opacity: 0, y: 6 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
-            whileHover={{ y: -3, scale: 1.06 }}
-            transition={{ type: 'spring', stiffness: 240, damping: 18 }}
+            transition={{ duration: 0.5, ease: 'easeOut' }}
         >
-            <LogoChip src={uni.src} alt={uni.alt} size="lg" />
+            <motion.div whileHover={{ y: -3, scale: 1.08 }} transition={{ type: 'spring', stiffness: 300, damping: 18 }}>
+            <Mark src={uni.src} label={uni.alt} size="lg" />
             <svg viewBox="0 0 48 48" className="pointer-events-none absolute inset-0 h-full w-full">
                 <motion.rect
                     x="1.5" y="1.5" width="45" height="45" rx="12" fill="none"
@@ -362,6 +333,7 @@ export const UniversityMark = ({ id }) => {
                     transition={{ duration: 1, ease: 'easeInOut', delay: 0.15 }}
                 />
             </svg>
+            </motion.div>
         </motion.div>
     )
 }

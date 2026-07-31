@@ -32,6 +32,7 @@ export const content = {
             statusValue: 'Transaction Pricing @ BMW Group · Munich',
             viewResume: 'View full résumé',
             privateRepo: 'Private repository',
+            inProgress: 'In progress',
             toolbox: 'Toolbox',
             present: 'Present',
             scroll: 'Scroll',
@@ -133,6 +134,7 @@ export const content = {
         education: [
             {
                 logo: 'ie',
+                inProgress: true,
                 school: 'IE University',
                 degree: 'M.Sc. Business Analytics and Data Science',
                 details: 'IE School of Science and Technology',
@@ -186,6 +188,7 @@ export const content = {
             statusValue: 'Transaction Pricing @ BMW Group · Múnich',
             viewResume: 'Ver CV completo',
             privateRepo: 'Repositorio privado',
+            inProgress: 'En curso',
             toolbox: 'Herramientas',
             present: 'Actualidad',
             scroll: 'Desliza',
@@ -287,6 +290,7 @@ export const content = {
         education: [
             {
                 logo: 'ie',
+                inProgress: true,
                 school: 'IE University',
                 degree: 'Máster en Business Analytics y Data Science',
                 details: 'IE School of Science and Technology',
