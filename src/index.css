@@ -32,3 +32,9 @@ body { -webkit-font-smoothing: antialiased; }
     transition-duration: 0.001ms !important;
   }
 }
+
+/* Gentle float for the goose, and a breathing waterline under it. */
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2.5px); } }
+.animate-bob { animation: bob 2.6s ease-in-out infinite; }
+@keyframes ripple { 0%, 100% { opacity: 0.35; } 50% { opacity: 0.85; } }
+.animate-ripple { animation: ripple 2.6s ease-in-out infinite; }

@@ -138,7 +138,7 @@ export const content = {
                 school: 'IE University',
                 degree: 'M.Sc. Business Analytics and Data Science',
                 details: 'IE School of Science and Technology',
-                city: 'Madrid',
+                city: 'Madrid (Part-Time)',
             },
             {
                 logo: 'tum',
@@ -294,7 +294,7 @@ export const content = {
                 school: 'IE University',
                 degree: 'Máster en Business Analytics y Data Science',
                 details: 'IE School of Science and Technology',
-                city: 'Madrid',
+                city: 'Madrid (Part-Time)',
             },
             {
                 logo: 'tum',

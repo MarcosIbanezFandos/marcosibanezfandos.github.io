@@ -203,36 +203,30 @@ const ThesisViz = () => (
     </svg>
 )
 
-// Game of the Goose: the goose itself, bobbing gently.
+// Game of the Goose: the goose itself. Deliberately plain SVG with a CSS bob —
+// framer-motion's viewport trigger has no layout box to observe on an SVG <g>,
+// which left this invisible.
 const OcaViz = () => (
-    <svg viewBox="0 0 100 60" className="h-full w-full">
-        <motion.g
-            initial={{ opacity: 0, x: -6 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 0.5, ease: 'easeOut' }}
-        >
-            <motion.g animate={{ y: [0, -2.5, 0] }} transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}>
-                {/* body */}
-                <ellipse cx="52" cy="38" rx="24" ry="14" className="fill-slate-600 dark:fill-slate-100" />
-                {/* wing */}
-                <path d="M40 34c8-5 20-5 26 1-5 6-18 8-26-1z" className="fill-slate-400 dark:fill-slate-300" />
-                {/* tail */}
-                <path d="M76 34l12-5-3 8 3 3-12 1z" className="fill-slate-600 dark:fill-slate-100" />
-                {/* neck + head */}
-                <path d="M32 40c-5-4-6-11-4-17 2-7 8-11 13-10-4 2-7 6-8 11-1 6 1 11 5 14z"
-                    className="fill-slate-600 dark:fill-slate-100" />
-                <circle cx="39" cy="14" r="7.5" className="fill-slate-600 dark:fill-slate-100" />
-                <circle cx="41.5" cy="12" r="1.6" className="fill-white dark:fill-slate-800" />
-                {/* beak */}
-                <path d="M31.5 14l-9 2.5 9 3z" className="fill-amber-400" />
-            </motion.g>
-            {/* legs */}
-            <path d="M46 51v6M58 51v6" className="stroke-amber-400" strokeWidth="2.5" strokeLinecap="round" />
-            {/* water ripple */}
-            <motion.path d="M28 58h48" className="stroke-sky-400/60" strokeWidth="2" strokeLinecap="round"
-                animate={{ opacity: [0.35, 0.8, 0.35] }} transition={{ duration: 2.4, repeat: Infinity }} />
-        </motion.g>
+    <svg viewBox="0 0 100 62" className="h-full w-full">
+        <g className="animate-bob">
+            {/* body */}
+            <ellipse cx="54" cy="38" rx="23" ry="13" className="fill-slate-600 dark:fill-slate-100" />
+            {/* wing */}
+            <path d="M44 34c7-4 18-4 24 1-5 5-17 7-24-1z" className="fill-slate-400 dark:fill-slate-300" />
+            {/* tail */}
+            <path d="M76 33l13-5-3 8 3 4-13 1z" className="fill-slate-600 dark:fill-slate-100" />
+            {/* neck */}
+            <path d="M36 41c-6-5-7-13-4-20 2-6 7-9 12-9-4 3-6 7-7 12-1 7 1 13 5 16z"
+                className="fill-slate-600 dark:fill-slate-100" />
+            {/* head */}
+            <circle cx="42" cy="14" r="8" className="fill-slate-600 dark:fill-slate-100" />
+            <circle cx="45" cy="11.5" r="1.7" className="fill-white dark:fill-slate-800" />
+            {/* beak */}
+            <path d="M34.5 14l-10 2.5 10 3z" className="fill-amber-400" />
+        </g>
+        {/* legs + water */}
+        <path d="M48 50v6M60 50v6" className="stroke-amber-400" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+        <path d="M26 59h50" className="stroke-sky-400/70 animate-ripple" strokeWidth="2.5" strokeLinecap="round" fill="none" />
     </svg>
 )
 
