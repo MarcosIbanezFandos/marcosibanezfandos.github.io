@@ -105,7 +105,7 @@ por Google para siempre.
   es suficiente.
 - Comprobar también los **metadatos** del PDF (autor, software, rutas de fichero):
   ```bash
-  exiftool -all= CV_MarcosIbanez_2026.pdf
+  exiftool -all= CV_Ibanez_Aug26.pdf
   ```
 - Ojo con las capturas de pantalla: suelen colar tokens, rutas locales, nombres de
   proyectos privados o correos en pestañas abiertas.

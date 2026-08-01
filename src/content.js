@@ -339,4 +339,4 @@ export const TOOLBOX_GROUPS_ES = {
     'Cloud & Tooling': 'Cloud y Herramientas',
 };
 
-export const RESUME = 'CV_MarcosIbanez_2026.pdf';
+export const RESUME = 'CV_Ibanez_Aug26.pdf';
