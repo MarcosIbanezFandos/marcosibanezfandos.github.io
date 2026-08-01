@@ -2,3 +2,18 @@ node_modules
 dist
 .DS_Store
 *.local
+
+# === Secretos (no versionar nunca) ===
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa
+credentials.json
+serviceAccount*.json
+secrets.json
+secrets.yaml
+secrets.yml
