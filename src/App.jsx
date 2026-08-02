@@ -20,7 +20,7 @@ const TONES = {
     violet: 'bg-violet-400/10 text-violet-700 dark:text-violet-300',
 }
 
-const SECTIONS = ['about', 'experience', 'projects', 'publications', 'education', 'certifications', 'volunteering']
+const SECTIONS = ['about', 'experience', 'education', 'certifications', 'projects', 'publications', 'volunteering']
 
 export default function App() {
     // English by default; the visitor can switch to Spanish at any time.
@@ -205,73 +205,6 @@ export default function App() {
                             </Reveal>
                         </Section>
 
-                        {/* Projects */}
-                        <Section id="projects" title={t.nav.projects}>
-                            <ul className="space-y-2">
-                                {t.projects.map((p, i) => (
-                                    <Reveal key={p.title} delay={i * 0.05}>
-                                        <li>
-                                            <GlowCard href={p.private ? undefined : (p.live || p.link)}>
-                                                <div className="flex flex-col gap-4 sm:flex-row-reverse sm:items-start sm:justify-end">
-                                                    <ProjectViz theme={p.theme} />
-                                                    <div className="flex-1">
-                                                        <h3 className="font-bold leading-snug text-slate-900 dark:text-slate-100">
-                                                            <span className="inline-flex items-baseline gap-1.5">
-                                                                {p.title}
-                                                                {p.private
-                                                                    ? <Lock size={14} className="shrink-0 translate-y-px text-slate-400" aria-label={t.ui.privateRepo} />
-                                                                    : <ArrowUpRight size={16} className="shrink-0 translate-y-px transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />}
-                                                            </span>
-                                                        </h3>
-                                                        <p className="mt-2 text-sm leading-relaxed">{p.description}</p>
-                                                        <ul className="mt-3 flex flex-wrap gap-1.5">
-                                                            {p.tech.map(s => <Chip key={s}>{s}</Chip>)}
-                                                        </ul>
-                                                        {p.private ? (
-                                                            <span className="mt-3 inline-flex items-center gap-1.5 text-[11px] font-black uppercase tracking-widest text-slate-400">
-                                                                <Lock size={11} /> {t.ui.privateRepo}
-                                                            </span>
-                                                        ) : p.live ? (
-                                                            <span className="mt-3 inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
-                                                                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" /> live
-                                                            </span>
-                                                        ) : null}
-                                                    </div>
-                                                </div>
-                                            </GlowCard>
-                                        </li>
-                                    </Reveal>
-                                ))}
-                            </ul>
-                        </Section>
-
-                        {/* Research */}
-                        <Section id="publications" title={t.nav.publications}>
-                            <ul className="space-y-2">
-                                {t.publications.map((pub, i) => (
-                                    <Reveal key={pub.title} delay={i * 0.05}>
-                                        <li>
-                                            <GlowCard href={pub.link}>
-                                                <div className="flex flex-col gap-4 sm:flex-row-reverse sm:items-start sm:justify-end">
-                                                    {pub.theme === 'neural' ? <NeuralArt /> : <ProjectViz theme={pub.theme} />}
-                                                    <div className="flex-1">
-                                                        <div className="text-[11px] font-black uppercase tracking-widest text-slate-500">{pub.year} · {pub.publisher}</div>
-                                                        <h3 className="mt-1 font-bold leading-snug text-slate-900 dark:text-slate-100">
-                                                            <span className="inline-flex items-baseline gap-1">
-                                                                {pub.title}
-                                                                <ArrowUpRight size={16} className="shrink-0 translate-y-px transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                                                            </span>
-                                                        </h3>
-                                                        <p className="mt-2 text-sm leading-relaxed">{pub.description}</p>
-                                                    </div>
-                                                </div>
-                                            </GlowCard>
-                                        </li>
-                                    </Reveal>
-                                ))}
-                            </ul>
-                        </Section>
-
                         {/* Education */}
                         <Section id="education" title={t.nav.education}>
                             <ol className="space-y-4">
@@ -343,6 +276,73 @@ export default function App() {
                                                 <span className="text-sm font-bold text-slate-900 dark:text-slate-100">{c.title}</span>
                                                 {c.issuer && <span className="text-[11px] font-semibold text-slate-600 dark:text-slate-400">{c.issuer} {c.year}</span>}
                                             </div>
+                                        </li>
+                                    </Reveal>
+                                ))}
+                            </ul>
+                        </Section>
+
+                        {/* Projects */}
+                        <Section id="projects" title={t.nav.projects}>
+                            <ul className="space-y-2">
+                                {t.projects.map((p, i) => (
+                                    <Reveal key={p.title} delay={i * 0.05}>
+                                        <li>
+                                            <GlowCard href={p.private ? undefined : (p.live || p.link)}>
+                                                <div className="flex flex-col gap-4 sm:flex-row-reverse sm:items-start sm:justify-end">
+                                                    <ProjectViz theme={p.theme} />
+                                                    <div className="flex-1">
+                                                        <h3 className="font-bold leading-snug text-slate-900 dark:text-slate-100">
+                                                            <span className="inline-flex items-baseline gap-1.5">
+                                                                {p.title}
+                                                                {p.private
+                                                                    ? <Lock size={14} className="shrink-0 translate-y-px text-slate-400" aria-label={t.ui.privateRepo} />
+                                                                    : <ArrowUpRight size={16} className="shrink-0 translate-y-px transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />}
+                                                            </span>
+                                                        </h3>
+                                                        <p className="mt-2 text-sm leading-relaxed">{p.description}</p>
+                                                        <ul className="mt-3 flex flex-wrap gap-1.5">
+                                                            {p.tech.map(s => <Chip key={s}>{s}</Chip>)}
+                                                        </ul>
+                                                        {p.private ? (
+                                                            <span className="mt-3 inline-flex items-center gap-1.5 text-[11px] font-black uppercase tracking-widest text-slate-400">
+                                                                <Lock size={11} /> {t.ui.privateRepo}
+                                                            </span>
+                                                        ) : p.live ? (
+                                                            <span className="mt-3 inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
+                                                                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" /> live
+                                                            </span>
+                                                        ) : null}
+                                                    </div>
+                                                </div>
+                                            </GlowCard>
+                                        </li>
+                                    </Reveal>
+                                ))}
+                            </ul>
+                        </Section>
+
+                        {/* Research */}
+                        <Section id="publications" title={t.nav.publications}>
+                            <ul className="space-y-2">
+                                {t.publications.map((pub, i) => (
+                                    <Reveal key={pub.title} delay={i * 0.05}>
+                                        <li>
+                                            <GlowCard href={pub.link}>
+                                                <div className="flex flex-col gap-4 sm:flex-row-reverse sm:items-start sm:justify-end">
+                                                    {pub.theme === 'neural' ? <NeuralArt /> : <ProjectViz theme={pub.theme} />}
+                                                    <div className="flex-1">
+                                                        <div className="text-[11px] font-black uppercase tracking-widest text-slate-500">{pub.year} · {pub.publisher}</div>
+                                                        <h3 className="mt-1 font-bold leading-snug text-slate-900 dark:text-slate-100">
+                                                            <span className="inline-flex items-baseline gap-1">
+                                                                {pub.title}
+                                                                <ArrowUpRight size={16} className="shrink-0 translate-y-px transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                                                            </span>
+                                                        </h3>
+                                                        <p className="mt-2 text-sm leading-relaxed">{pub.description}</p>
+                                                    </div>
+                                                </div>
+                                            </GlowCard>
                                         </li>
                                     </Reveal>
                                 ))}

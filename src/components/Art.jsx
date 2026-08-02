@@ -78,69 +78,38 @@ export const BmwArt = ({ hovered }) => {
 /* ── Pamesa · Ceramics ──────────────────────────────────────────────────────
    The logo settles onto the card like a tile being laid, and shimmers on
    hover the way a glazed surface catches light.                             */
-export const PamesaArt = ({ hovered }) => {
-    const reduce = useReducedMotion()
-    return (
-        <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl">
-            <motion.div
-                className="absolute right-4 top-4"
-                initial={{ opacity: 0, y: -8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: 'easeOut', delay: 0.15 }}
-            >
-                <motion.div
-                    animate={hovered && !reduce ? { rotateY: [0, 180, 360] } : { rotateY: 0 }}
-                    transition={{ duration: 1.2, ease: 'easeInOut' }}
-                >
-                    <Mark src="/logos/pamesa.png" label="Pamesa Ceramics" />
-                </motion.div>
-            </motion.div>
-            <motion.div
-                className="absolute left-0 top-0 h-full w-[3px] bg-clay-500"
-                initial={{ scaleY: 0 }} animate={{ scaleY: 1 }}
-                style={{ originY: 0 }} transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            />
+export const PamesaArt = () => (
+    <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl">
+        <div className="absolute right-4 top-4">
+            <Mark src="/logos/pamesa.png" label="Pamesa Ceramics" />
         </div>
-    )
-}
+        <motion.div
+            className="absolute left-0 top-0 h-full w-[3px] bg-clay-500"
+            initial={{ scaleY: 0 }} animate={{ scaleY: 1 }}
+            style={{ originY: 0 }} transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        />
+    </div>
+)
 
 /* ── ETRA I+D · Data / smart cities ─────────────────────────────────────────
    The logo arrives with a signal pulse rippling out from it.                */
-export const EtraArt = ({ hovered }) => {
-    const reduce = useReducedMotion()
-    return (
-        <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl">
-            <div className="absolute right-4 top-4">
-                <motion.span
-                    className="absolute inset-0 rounded-xl ring-2 ring-emerald-400/60"
-                    initial={{ opacity: 0 }}
-                    animate={reduce ? {} : { scale: [1, 1.55], opacity: [0.55, 0] }}
-                    transition={{ duration: 2.2, repeat: Infinity, ease: 'easeOut' }}
-                />
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.7 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ type: 'spring', stiffness: 220, damping: 17, delay: 0.15 }}
-                >
-                    <motion.div animate={hovered && !reduce ? { y: [0, -4, 0] } : { y: 0 }}
-                        transition={{ duration: 1, repeat: hovered ? Infinity : 0 }}>
-                        <Mark src="/logos/etra.png" label="ETRA I+D" />
-                    </motion.div>
-                </motion.div>
-            </div>
-            <motion.div
-                className="absolute left-0 top-0 h-full w-[3px] bg-emerald-500"
-                initial={{ scaleY: 0 }} animate={{ scaleY: 1 }}
-                style={{ originY: 0 }} transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            />
+export const EtraArt = () => (
+    <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl">
+        <div className="absolute right-4 top-4">
+            <Mark src="/logos/etra.png" label="ETRA I+D" />
         </div>
-    )
-}
+        <motion.div
+            className="absolute left-0 top-0 h-full w-[3px] bg-emerald-500"
+            initial={{ scaleY: 0 }} animate={{ scaleY: 1 }}
+            style={{ originY: 0 }} transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        />
+    </div>
+)
 
 export const CompanyArt = ({ theme, hovered }) => {
     if (theme === 'bmw') return <BmwArt hovered={hovered} />
-    if (theme === 'pamesa') return <PamesaArt hovered={hovered} />
-    if (theme === 'etra') return <EtraArt hovered={hovered} />
+    if (theme === 'pamesa') return <PamesaArt />
+    if (theme === 'etra') return <EtraArt />
     return null
 }
 
