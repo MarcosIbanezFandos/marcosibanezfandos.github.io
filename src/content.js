@@ -91,7 +91,6 @@ export const content = {
                 description:
                     'A full-stack progressive web app that automates passive portfolio management. It computes the exact monthly contribution to allocate across each fund to converge on a target asset allocation, applying the cash-flow rebalancing methodology used by robo-advisors. Includes an ETF look-through engine that resolves underlying holdings into real exposure by company, country and currency, benchmarking against major indices, and money-weighted return (IRR) derived from imported transaction history.',
                 link: 'https://github.com/MarcosIbanezFandos/Fandance-PWA',
-                live: 'https://fandance-pwa.vercel.app',
                 tech: ['React', 'FastAPI', 'Supabase', 'Vercel', 'yfinance', 'PWA'],
             },
             {
@@ -107,7 +106,7 @@ export const content = {
                 title: 'Game of the Goose — Multiplayer Web Edition',
                 description:
                     'University group project: a browser-based multiplayer implementation of the classic Spanish board game. Server-side game logic and turn validation run on Java Servlets, with match state persisted in AWS RDS so several players share a synchronised board. Containerised with Docker and deployed to Railway.',
-                link: 'https://github.com/MarcosIbanezFandos/ProyectoOca',
+                private: true,
                 tech: ['Java Servlets', 'JavaScript', 'AWS RDS', 'Docker', 'Tomcat'],
             },
         ],
@@ -247,7 +246,6 @@ export const content = {
                 description:
                     'Aplicación web progresiva full-stack que automatiza la gestión pasiva de carteras. Calcula la aportación mensual exacta a asignar a cada fondo para converger hacia una asignación objetivo, aplicando la metodología de rebalanceo por flujos de caja que emplean los robo-advisors. Incorpora un motor de look-through de ETFs que descompone las posiciones subyacentes en exposición real por empresa, país y divisa, comparación con los principales índices y cálculo de la rentabilidad ponderada por dinero (TIR) a partir del historial de transacciones importado.',
                 link: 'https://github.com/MarcosIbanezFandos/Fandance-PWA',
-                live: 'https://fandance-pwa.vercel.app',
                 tech: ['React', 'FastAPI', 'Supabase', 'Vercel', 'yfinance', 'PWA'],
             },
             {
@@ -263,7 +261,7 @@ export const content = {
                 title: 'Juego de la Oca — Edición Web Multijugador',
                 description:
                     'Proyecto universitario en grupo: implementación multijugador del clásico juego de mesa en navegador. La lógica de partida y la validación de turnos se ejecutan en el servidor con Java Servlets, y el estado se persiste en AWS RDS para que varios jugadores compartan un tablero sincronizado. Contenerizado con Docker y desplegado en Railway.',
-                link: 'https://github.com/MarcosIbanezFandos/ProyectoOca',
+                private: true,
                 tech: ['Java Servlets', 'JavaScript', 'AWS RDS', 'Docker', 'Tomcat'],
             },
         ],
